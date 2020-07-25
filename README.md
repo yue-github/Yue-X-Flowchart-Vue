@@ -11,6 +11,8 @@
 
 [online](http://oxoyo.co/X-Flowchart-Vue/)
 
+first, thanks for OXOYO AND G6 AND VUE, I just make it perfect
+
 ## 示例
 
 ``` bash
