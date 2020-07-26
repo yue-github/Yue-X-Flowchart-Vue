@@ -5,7 +5,7 @@
  *
  * 文档：https://cli.vuejs.org/zh/config/
  */
-
+process.env.IS_BUILD_LIB = true;
 module.exports = {
   // 部署应用包时的基本URL，置空使用相对路径
   publicPath: process.env.IS_BUILD_LIB ? '/' : '/X-Flowchart-Vue/',

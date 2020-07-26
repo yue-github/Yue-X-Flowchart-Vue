@@ -5,6 +5,7 @@
 */
 
 <style scoped lang="less" rel="stylesheet/less">
+@import '../assets/icon/iconfont.css';
   .materials-editor {
     display: inline-block;
     width: 100%;
@@ -160,19 +161,19 @@
           fitViewPadding: 20,
           autoPaint: true,
           // renderer: 'svg',
-          // 模式
           modes: {
+            // default: ['collapse-expand', 'drag-canvas', 'drag-node'],
             edit: [
               {
                 type: 'node-control',
                 config: {
                   shapeControlPoint: {
                     // 是否在缩放、旋转节点时更新所有与之相连的边
-                    updateEdge: false
+                    updateEdge: true
                   },
                   dragNode: {
                     // 是否在拖拽节点时更新所有与之相连的边
-                    updateEdge: false
+                    updateEdge: true
                   },
                   // 是否支持在节点上添加文本
                   nodeLabel: true,
@@ -389,12 +390,15 @@
           id: G6Util.uniqueId(),
           draggable: true,
           type: info.type,
+          text: info.text,
+          iconColor: info.color,
+          iconSize: (info.width + info.height) / 2,// 根据宽高自动算size大小
           label: info.defaultLabel,
           labelCfg: {
             position: 'center',
             style: {
               fontSize: 16,
-              stroke: '#000000'
+              stroke: '#000000',
             }
           },
           width: info.width,

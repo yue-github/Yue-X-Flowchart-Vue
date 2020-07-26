@@ -8,20 +8,18 @@
   .node-element {
     display: inline-block;
     margin: 2px;
-    border: 1px solid transparent;
-
-    &:hover {
-      border-color: rgba(0, 0, 0, .1);
+    padding:3px;
+    padding-right:5px;
+    &:hover .content{
+      border-color: #ccc;
       cursor: move;
     }
     .content {
       display: inline-block;
-      width: 100%;
-      height: 100%;
-
+      border: 1px solid transparent;
+      padding:5px;
+      padding-right:6px;
       .icon {
-        left: 1px;
-        top: 1px;
         width: 32px;
         height: 30px;
         display: block;
@@ -30,17 +28,48 @@
       }
     }
   }
+ .icon-content{
+   display:flex;
+   justify-content: center;
+   align-items: center;
+   padding:0;
+   margin:0;
+   border-radius:100%;
+ }
+  .my-icon{
+    color: var(--color);
+    font-size: var(--size); 
+    border-radius:100%;
+  }
+  .icon-node-element{
+    display:flex;
+    width:25%;
+    justify-content: center;
+    align-items: center;
+    padding:0;
+    margin:0;
+    margin-top:1px;
+    height:60px;
+    &:hover .content{
+       border-color:transparent;
+    }
+    &:hover .my-icon{
+      box-shadow:0px 0px 20px 0px #409efe;
+      cursor: move;
+    }
+  }
 </style>
 
 <template>
   <div
     class="node-element"
-    :style="elementStyle"
     @mousedown="handleMouseDown"
+    :class="{'icon-node-element': info.type == 'iconfont' ? true : false}"
   >
-    <div class="content" :title="title">
-      <svg class="icon" v-html="info.icon">
+    <div class="content" :class="{ iconContent: info.type == 'iconfont' ? true : false }" :title="title">
+      <svg class="icon" v-html="info.icon" v-if="info.type != 'iconfont'">
       </svg>
+      <span class="iconfont my-icon" style="margin:0;padding:0" v-html="info.text" v-else :style="{'--color': info.color, '--size': info.size + 'px'}"></span>
     </div>
   </div>
 </template>
@@ -80,7 +109,7 @@
     computed: {
       elementStyle () {
         const _t = this
-        const style = {}
+        let style = {}
         if (_t.width) {
           style.width = _t.width + 'px'
         }

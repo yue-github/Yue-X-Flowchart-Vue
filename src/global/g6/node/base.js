@@ -12,6 +12,7 @@ export default {
   options: {},
   drawShape (cfg, group) {
     const shapeType = this.shapeType
+    console.log(shapeType)
     const style = this.getShapeStyle(cfg)
     const keyShape = group.addShape(shapeType, {
       attrs: style,
@@ -23,7 +24,7 @@ export default {
   },
   getAnchorPoints (cfg) {
     const { anchorPoints, width, height } = cfg
-    const keyShape = this.keyShape
+    const keyShape = cfg.type == 'iconfont' ? this.pathKeyShape : this.keyShape;// 2020-7-26 by WuTongYue
     const points = []
     if (anchorPoints && anchorPoints.length) {
       for (let i = 0, len = anchorPoints.length; i < len; i++) {
@@ -59,6 +60,13 @@ export default {
     const defaultStyle = this.options
     // 从新计算图形样式
     const shapeStyle = this.getShapeStyle(cfg)
+    if(shapeStyle.type == "iconfont"){
+      shapeStyle.size = (shapeStyle.width + shapeStyle.height) / 2
+      shapeStyle.iconSize = (shapeStyle.width + shapeStyle.height) / 2
+      shapeStyle.fontSize = (shapeStyle.width + shapeStyle.height) / 2
+      shapeStyle.shape = 'iconfont'
+    }
+    
     const style = G6Util.mix({}, defaultStyle, shapeStyle)
     // 更新图形
     this.updateShape(cfg, item, style)
@@ -69,12 +77,13 @@ export default {
       ...style
     })
     // 更新图形文本
-    this.updateLabel(cfg, item)
+    this.updateLabel(cfg, item, style)
   },
   // 绘制完成后附加锚点
   afterDraw (cfg, group) {
     // 绘制锚点
     utils.anchor.draw(cfg, group)
+    // utils.node.draw(cfg, group)
     // 绘制shapeControl
     utils.shapeControl.draw(cfg, group)
   },

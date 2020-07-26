@@ -12,6 +12,9 @@
       justify-content: flex-start;
       align-content: flex-start;
     }
+    .icon-card-item{
+      box-sizing:border-box;
+    }
   }
 </style>
 
@@ -23,6 +26,8 @@
       :title="$t(item.lang) || item.label"
       :enableFold="true"
       :bold="true"
+      :who="item.name"
+      :class="{ 'icon-card-item': item.name == 'Primitives' ? true : false }"
     >
       <NodeElement
         v-for="(child, childIndex) in item.children.filter(target => target.enable)"

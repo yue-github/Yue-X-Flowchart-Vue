@@ -675,8 +675,8 @@ export default {
               ..._t.dragNode.dottedNodeStyle,
               width,
               height,
-              x: event.x - width / 2,
-              y: event.y - height / 2
+              x: event.x - width ,
+              y: event.y - height 
             }
           })
           // _t.graph.paint()
@@ -691,11 +691,12 @@ export default {
       createNode (event) {
         const _t = this
         if (_t.dragNode.dottedNode && _t.info.node) {
-          const { width, height, minWidth, minHeight, label, type } = _t.info.node
+          const { width, height, minWidth, minHeight, label, type, iconSize, iconColor } = _t.info.node
+          _t.graph.$D.fill = iconColor || _t.graph.$D.fill;
           const node = {
             ..._t.info.node,
             id: G6Util.uniqueId(),
-            name: 'XFC_NODE_' + utils.common.firstUpperCase(type),
+            name: 'YUE_NODE_' + utils.common.firstUpperCase(type),
             draggable: true,
             x: event.x,
             y: event.y,

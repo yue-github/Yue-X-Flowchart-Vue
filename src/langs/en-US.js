@@ -70,8 +70,9 @@ export default {
   L10221: 'Author',
   L10222: 'Github',
   // left panel
-  L10300: 'Materials',
-  L10301: 'General',
+  L10300: 'utils',
+  L103000: 'Materials',
+  L10301: 'Primitives',
   L10302: 'Miscellaneous',
   L10303: 'Advanced',
   L10304: 'Basic',

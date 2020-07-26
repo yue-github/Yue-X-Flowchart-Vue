@@ -10,6 +10,7 @@ import text from './text'
 import textbox from './textbox'
 import ellipse from './ellipse'
 import square from './square'
+import iconfont from './iconfont'
 import circle from './circle'
 import process from './process'
 import diamond from './diamond'
@@ -41,6 +42,7 @@ export default {
   textbox,
   ellipse,
   square,
+  iconfont,
   circle,
   process,
   diamond,
