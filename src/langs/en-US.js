@@ -72,7 +72,8 @@ export default {
   // left panel
   L10300: 'utils',
   L103000: 'Materials',
-  L10301: 'Primitives',
+  L10301: 'utils',
+  L103011: 'Primitives',
   L10302: 'Miscellaneous',
   L10303: 'Advanced',
   L10304: 'Basic',
