@@ -1,7 +1,7 @@
 /**
- * Created by OXOYO on 2019/7/8.
+ * Created by WuTongYue on 2020-7-26
  *
- * 正方形
+ * 字体图标
  */
 
 import * as G6Util from '@antv/util'
