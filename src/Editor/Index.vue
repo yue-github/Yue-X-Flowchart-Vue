@@ -392,6 +392,7 @@
           type: info.type,
           text: info.text,
           iconColor: info.color,
+          textOrigin: info.textOrigin,
           iconSize: (info.width + info.height) / 2,// 根据宽高自动算size大小
           label: info.defaultLabel,
           labelCfg: {
