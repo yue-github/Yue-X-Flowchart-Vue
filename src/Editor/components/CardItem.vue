@@ -49,9 +49,9 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
   .icon-body {
-    display:flex;
+    display: flex;
     justify-content: space-around;
-    box-sizing:border-box;
+    box-sizing: border-box;
     flex-wrap: wrap;
   }
 }
@@ -66,9 +66,15 @@
         <Icon type="ios-arrow-down" v-show="isFolded"></Icon>
       </div>
     </div>
-      <div class="body" v-show="!isFolded" :class="{ 'icon-body': who == 'Primitives' ? true : false }">
+    <transition name="fade">
+      <div
+        class="body"
+        v-show="!isFolded"
+        :class="{ 'icon-body': who == 'Primitives' ? true : false }"
+      >
         <slot></slot>
       </div>
+    </transition>
   </div>
 </template>
 
