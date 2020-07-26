@@ -1,7 +1,7 @@
-first, thanks for OXOYO and G6 and vue, I just make it perfect
+First, thanks for OXOYO and G6 and vue, I just make it perfect
 
 # 下载
-# git clone 仓库地址
+# git clone https://github.com/yue-github/Yue-X-Flowchart-Vue.git
 -----------------------------------
 
 # 安装依赖
