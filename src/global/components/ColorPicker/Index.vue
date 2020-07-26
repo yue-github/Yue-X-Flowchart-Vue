@@ -60,16 +60,17 @@
       </slot>
     </div>
     <div class="panel" v-show="!preview || (preview && showPanel)">
+      <div class="btn-block">
+        <Button class="btn" type="default" size="small" @click="doHide">{{ $t('L10203') }}</Button>
+        <Button class="btn" type="primary" size="small" @click="doConfirm">{{ $t('L10205') }}</Button>
+      </div>
       <SketchPicker
         class="sketch-picker"
         :value="color"
         :presetColors="presetColors"
         @input="handleChange"
       ></SketchPicker>
-      <div class="btn-block">
-        <Button class="btn" type="default" size="small" @click="doHide">{{ $t('L10203') }}</Button>
-        <Button class="btn" type="primary" size="small" @click="doConfirm">{{ $t('L10205') }}</Button>
-      </div>
+      
     </div>
   </div>
 </template>
