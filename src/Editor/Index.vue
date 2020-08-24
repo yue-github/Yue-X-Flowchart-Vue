@@ -74,6 +74,32 @@
     },
     data () {
       return {
+        popFloatMsg: [// 右上角浮层
+            {
+                id: 1,
+                url: require('@/assets/images/bindAttr/param.png'),
+                label: '能源绩效参数'
+            },
+            {
+                id: 2,
+                url: require('@/assets/images/bindAttr/feel.png'),
+                label: '传感器'
+            },
+            {
+                id: 3,
+                url: require('@/assets/images/bindAttr/standard.png'),
+                label: '指标'
+            }
+        ],
+        popClickMsg: {// 绑定图元属性弹层信息
+          data:{
+            id: 0,
+            title: '',
+            bgColor: '',
+            tag: '',
+            tableData: []
+          }
+        },
         editorInfo: {},
         defInfo: {
           // 编辑器状态：add || edit || preview
@@ -158,6 +184,7 @@
           width: sketchpad.clientWidth,
           height: sketchpad.clientHeight,
           fitView: true,
+          animate: true,
           fitViewPadding: 20,
           autoPaint: true,
           // renderer: 'svg',

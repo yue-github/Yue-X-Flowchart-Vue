@@ -85,6 +85,11 @@ export default {
       _t.dragNode.status = 'dragNodeToEditor'
     },
     onNodeMousedown (event) {
+      // update by WuTongYue  
+      event.preventDefault();// 阻止默认事件
+      event.cancelBubble = true;// ie取消冒泡
+      event.stopPropagation(); // w3c取消冒泡（这边三个意在解决画线会多画出一条线的问题）
+
       // console.log('onNodeMousedown')
       // 非左键忽略
       if (!utils.common.isLeftKey(event)) {
@@ -285,6 +290,7 @@ export default {
       }, TIME_FRAME)()
     },
     onMouseup (event) {
+      console.log(event.currentTarget.cfg.nodes)
       const _t = this
       // console.log('onMouseup')
       if (_t.info) {
@@ -348,10 +354,10 @@ export default {
           },
           attrs: {},
           style: {
+            ...config.edge.style.default,
             lineAppendWidth: _t.graph.$D.lineAppendWidth,
             stroke: _t.graph.$D.lineColor,
             lineWidth: _t.graph.$D.lineWidth,
-            ...config.edge.style.default,
             ...config.edge.type[_t.graph.$D.lineDash]
           },
           // FIXME 边的形式需要与工具栏联动
