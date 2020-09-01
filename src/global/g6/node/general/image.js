@@ -2,7 +2,7 @@
  * Created by 玉旨旺 on 2020/7/18.
  *
  * png、jpg、svg等图片
- * 
+ *
  * Update by 蓝之静云 on 2020/8/18
  */
 
@@ -13,6 +13,7 @@ import utils from '../../utils'
 import config from '../../config'
 import myBus from '@/global/utils/bus'
 import Store from '@/store'
+
 export default {
   name: 'image',
   extendName: 'single-shape',
@@ -40,9 +41,9 @@ export default {
       return style
     },
     // 绘制后附加锚点
-    afterDraw(cfg, group) {
+    afterDraw (cfg, group) {
       // 模拟要绘制的图元属性绑定值---在cfg里可以找到，若后端对该图元信息有加bindAttr属性
-      let bindAttr = [], total = 3;
+      let bindAttr = [], total = 3
       for (let i of new Array(total)) {
         bindAttr.push({
           id: 1,
@@ -56,15 +57,20 @@ export default {
             // 各自图元的绑定属性文本
           ],
           bindAttrImages: [{}],// 绑定属性logo及相关信息
-          fill: "#F0F0F0",
+          fill: 'black',
           shape: 'circle',
           opacity: 0.6,
-          shadowColor: `#${(color => new Array(7 - color.length).join("0") + color)((Math.random() * 0x1000000 >>> 0).toString(16))}`,
+          shadowColor: `#${(color => new Array(7 - color.length).join('0') + color)((Math.random() * 0x1000000 >>> 0).toString(16))}`,
           shadowBlur: 10,
           r: 10,
           span: 5
         })
       }
+      // 过滤不展示的部分
+      bindAttr = bindAttr.filter(_ => {
+        return _.isShow
+      })
+      // 为了比较清晰暂不整合一起，这里单独对绑定的属性进行改造
       // 图元尺寸
       const size = this.getSize(cfg)
       bindAttr = bindAttr.map((i, index, _t) => {// 注意：目前最多绑定3个属性，若超过需要改动位置算法
@@ -113,16 +119,17 @@ export default {
       // 添加图片logo
       bindAttr.bindAttrImages = bindAttr.map((_, _i) => {
         let json = {}
-        json.width = 20;
-        json.height = 20;
-        json.id = _.id;
-        json.text = '信息...';
-        json.x = _.x - (json.width >> 1);
-        json.y = _.y - (json.height >> 1);
-        json.opacity = 1;
+        json.width = 20
+        json.height = 20
+        json.id = _i + 1
+        json.entityId = cfg.id
+        json.text = '信息...'
+        json.x = _.x - (json.width >> 1)
+        json.y = _.y - (json.height >> 1)
+        json.opacity = 1
         switch (_i) {// 只是模拟---实际直接传值
           case 0:
-            json.img = require('@/assets/images/bindAttr/feel.png');
+            json.img = require('@/assets/images/bindAttr/feel.png')
             json.data = {
               id: 1,
               title: '传感器信息',// 标题
@@ -132,39 +139,18 @@ export default {
               tagBg: '#dca00a',// 标题右侧tag数字背景
               boxBorder: '1px solid #e4b63e',// box边框设置
               titles: {// 模拟表格标题---注意字段名例如row1...与具体数据的属性需要保持一致
-                row1: '属性名称',
-                row2: '属性ID',
-                row3: '传感器名称',
-                row4: '传感器ID',
-                row5: '传感器类型',
+                itemText: '属性名称',
+                itemValue: '属性ID',
+                sensorName: '传感器名称',
+                id: '传感器逻辑ID',
+                sensorType: '传感器类型',
+                defaultValue: '值'
               },
-              tableData: [// 绑定属性表格数据
-                {
-                  row1: '属性1',
-                  row2: '12',
-                  row3: '传感器1',
-                  row4: '34',
-                  row5: '计量类',
-                },
-                {
-                  row1: '属性2',
-                  row2: '121',
-                  row3: '传感器2',
-                  row4: '232',
-                  row5: '运行监检测类',
-                },
-                {
-                  row1: '属性3',
-                  row2: '23434',
-                  row3: '传感器3',
-                  row4: '232',
-                  row5: '水阀类',
-                },
-              ]
+              tableData: [] // 绑定属性表格数据
             }
-            break;
+            break
           case 1:
-            json.img = require('@/assets/images/bindAttr/param.png');
+            json.img = require('@/assets/images/bindAttr/param.png')
             json.data = {
               id: 2,
               title: '能源绩效参数',// 标题
@@ -188,9 +174,9 @@ export default {
                 }
               ]
             }
-            break;
+            break
           case 2:
-            json.img = require('@/assets/images/bindAttr/standard.png');
+            json.img = require('@/assets/images/bindAttr/standard.png')
             json.data = {
               id: 3,
               title: '指标信息',// 标题
@@ -223,18 +209,18 @@ export default {
                 }
               ]
             }
-            break;
+            break
         }
-        return json;
+        return json
       })
       // 过滤不需要展示的部分
       bindAttr.bindAttrImages = bindAttr.bindAttrImages.filter(_ => Store.getters.bindAttrList.includes(_.data.id))
       bindAttr.bindAttrImages.forEach(attrs => {
-        attrs.flag = 'bindAttr'; //标识是绑定属性
+        attrs.flag = 'bindAttr' //标识是绑定属性
         const imgShape = group.addShape('image', {
           visible: false,// 默认不展示
           attrs: attrs
-        });
+        })
         if (imgShape) {
           imgShape.on('mouseenter', function () {
             imgShape.attr({
@@ -249,7 +235,7 @@ export default {
             })
           })
           imgShape.on('click', _e => {
-            console.log(_e, _e.target._attrs.text)
+            console.log(_e.target._attrs.text)
             imgShape.attr({
               ...config.bindAttr.style.default,
               ...config.bindAttr.style.active
@@ -259,6 +245,26 @@ export default {
           })
         }
       })
+      // 添加文本浮层---尝试过直接在addShape中添加文本，未成功，可再试
+      // bindAttr.bindAttrTexts = bindAttr.map(_ => {
+      //   let json = {}
+      //   json.id = _.id;
+      //   json.x = _.x + _.disTextX;
+      //   json.y = _.y + _.disTextY;
+      //   json.textAlign ='center';
+      //   json.text = _.text;
+      //   json.fontSize = '12px';
+      //   json.opacity = 1;
+      //   json.textAlign = 'left';
+      //   json.fill = "#409efe"
+      //   return json;
+      // })
+      // bindAttr.bindAttrTexts.forEach(attrs => {
+      //   const textShape = group.addShape('text', {
+      //     attrs: attrs
+      //   });
+      // })
+      console.log(group)
       // 绘制锚点
       utils.anchor.draw(cfg, group)
       // 绘制shapeControl

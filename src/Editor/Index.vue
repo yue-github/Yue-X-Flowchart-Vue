@@ -187,6 +187,7 @@
           animate: true,
           fitViewPadding: 20,
           autoPaint: true,
+          animate: true,
           // renderer: 'svg',
           modes: {
             // default: ['collapse-expand', 'drag-canvas', 'drag-node'],
