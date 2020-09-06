@@ -8,6 +8,8 @@ import * as G6Util from '@antv/util'
 import * as G6DomUtil from '@antv/dom-util'
 import config from '../config'
 import utils from '../utils'
+import { updateBA } from '@/global/utils/bindAttrController'
+import updateWho from '@/global/utils/updateAllTypeNode'
 
 const TIME_FRAME = 200
 
@@ -75,7 +77,7 @@ export default {
     },
     onEditorAddNode (node) {
       const _t = this
-      // console.log('onEditorAddNode')
+      console.log('onEditorAddNode')
       // 初始化数据
       _t.info = {
         type: 'dragNode',
@@ -115,6 +117,18 @@ export default {
         node: event.item,
         target: event.target
       }
+      // 处理chart图标事件 改变图表数据
+      const trendData = [// 模拟数据
+        { genre: '机顶', sold: 75 * Math.random() },
+        { genre: '机舱', sold: 115 * Math.random() },
+        { genre: '机尾', sold: 320 * Math.random() },
+        { genre: '机头', sold: 150 * Math.random() },
+        { genre: '机中', sold: 250 * Math.random() },
+      ];
+      updateWho(_t.graph, _t.info.node._cfg.id, 'chartColumnarData', {
+        trendData: trendData
+      })
+
       if (_t.info.target && _t.info.target.attr('name')) {
         switch (_t.info.target.attr('name')) {
           case 'anchorPoint':
@@ -157,7 +171,7 @@ export default {
       }
     },
     onNodeMouseup (event) {
-      // console.log('onNodeMouseup')
+      console.log('onNodeMouseup')
       const _t = this
       _t.isLeave = true;
       if (_t.info && _t.info.type && _t[_t.info.type].stop) {
@@ -197,6 +211,18 @@ export default {
     onEdgeMouseup (event) {
       // console.log('onEdgeMouseup')
       const _t = this
+      console.log(event)
+      // 解决点击阴影效果
+      setTimeout(() => {
+        const sameFlag = event.item._cfg.id.split('-|-')[1];
+        const doubleArticles = event.currentTarget.cfg.edges.filter(_ => _._cfg.id.includes(sameFlag))
+        doubleArticles.forEach(edge => {
+          _t.graph.setItemState(edge, 'active', true)
+        })
+        if(event.item.getModel().attrs.flag == 'doubleLine'){
+          _t.graph.setItemState(event.item, 'active', false)
+        }
+      })
       if (_t.info && _t.info.type === 'drawLine') {
         _t[_t.info.type].stop.call(_t, event)
       }
@@ -211,6 +237,17 @@ export default {
     onEdgeContextmenu (event) {
       // console.log('onEdgeContextmenu')
       const _t = this
+      // 解决点击阴影效果
+      setTimeout(() => {
+        const sameFlag = event.item._cfg.id.split('-|-')[1];
+        const doubleArticles = event.currentTarget.cfg.edges.filter(_ => _._cfg.id.includes(sameFlag))
+        doubleArticles.forEach(edge => {
+          _t.graph.setItemState(edge, 'active', true)
+        })
+        if(event.item.getModel().attrs.flag == 'doubleLine'){
+          _t.graph.setItemState(event.item, 'active', false)
+        }
+      })
       _t.graph.emit('editor:contextmenu', {
         type: 'edge',
         x: event.clientX,
@@ -220,7 +257,7 @@ export default {
       })
     },
     onCanvasMouseenter (event) {
-      // console.log('onCanvasMouseenter')
+      console.log('onCanvasMouseenter')
       const _t = this
       if (_t.info && _t.info.type === 'dragNode') {
         _t[_t.info.type].createDottedNode.call(_t, event)
@@ -275,14 +312,13 @@ export default {
     },
     onCanvasMouseup (event) {
       const _t = this
-      // console.log('onCanvasMouseup', _t.info.type)
+      console.log('onCanvasMouseup', _t.info)
       if (_t.info && _t.info.type && _t[_t.info.type].stop) {
         _t[_t.info.type].stop.call(_t, event)
       }
     },
     onMousemove (event) {
       const _t = this
-      // console.log('onMousemove', _t.info)
       utils.common.throttle(function () {
         if (_t.info && _t.info.type && _t[_t.info.type].move) {
           _t[_t.info.type].move.call(_t, event)
@@ -290,9 +326,8 @@ export default {
       }, TIME_FRAME)()
     },
     onMouseup (event) {
-      console.log(event.currentTarget.cfg.nodes)
+      console.log('onMouseup')
       const _t = this
-      // console.log('onMouseup')
       if (_t.info) {
         if (_t.info.type) {
           if (_t.info.type === 'dragNode' && _t.dragNode.status === 'dragNodeToEditor') {
@@ -329,19 +364,20 @@ export default {
             arrowStyle.fill = lineColor
             arrowStyle.stroke = lineColor
           }
-          // console.log('arrowStyle', arrowStyle, data, lineColor)
           return arrowStyle
         }
+        // 心有灵犀
+        let sameFlag = new Date().getTime();
         _t.drawLine.currentLine = _t.graph.addItem('edge', {
-          id: G6Util.uniqueId(),
+          id: `${ G6Util.uniqueId() }-|-${ sameFlag }`,
           // 起始节点
           source: startModel.id,
           sourceAnchor: sourceAnchor ? sourceAnchor.anchorIndex : '',
           // 终止节点/位置
           target: {
-            x: event.x,
-            y: event.y
-          },
+              x: event.x,
+              y: event.y,
+            },
           // FIXME label 需支持双击编辑
           label: '',
           labelCfg: {
@@ -352,19 +388,60 @@ export default {
               stroke: '#000000'
             }
           },
-          attrs: {},
+          attrs: {
+            flag: 'doubleArticle'
+          },
           style: {
             ...config.edge.style.default,
             lineAppendWidth: _t.graph.$D.lineAppendWidth,
             stroke: _t.graph.$D.lineColor,
             lineWidth: _t.graph.$D.lineWidth,
-            ...config.edge.type[_t.graph.$D.lineDash]
+            ...config.edge.type[_t.graph.$D.lineDash],
           },
           // FIXME 边的形式需要与工具栏联动
           type: _t.graph.$D.lineType || 'line',
           startArrow: handleArrowStyle(_t.graph.$D.startArrow, _t.graph.$D.lineColor),
           endArrow: handleArrowStyle(_t.graph.$D.endArrow, _t.graph.$D.lineColor)
         })
+        // if(_t.graph.$D.lineDash == 'doubleArticle'){
+          _t.drawLine.doubleLine = _t.graph.addItem('edge', {
+            id: `${ G6Util.uniqueId() }-|-${ sameFlag }`,
+            // 起始节点
+            source: startModel.id,
+            sourceAnchor: sourceAnchor ? sourceAnchor.anchorIndex : '',
+            // 终止节点/位置
+            target: {
+                x: event.x,
+                y: event.y,
+              },
+            // FIXME label 需支持双击编辑
+            label: '',
+            labelCfg: {
+              position: 'center',
+              style: {
+                autoRotate: _t.graph.$D.autoRotate,
+                fontSize: 16,
+                stroke: '#000000'
+              }
+            },
+            // 韬光养晦
+            visible: _t.graph.$D.lineDash == 'doubleArticle',
+            attrs: {
+              flag: 'doubleLine',
+            },
+            style: {
+              ...config.edge.style.default,
+              lineAppendWidth: 15,
+              stroke: '#fff',
+              lineWidth: 2,
+              ...config.edge.type[_t.graph.$D.lineDash]
+            },
+            // FIXME 边的形式需要与工具栏联动
+            type: _t.graph.$D.lineType || 'line',
+            startArrow: handleArrowStyle(_t.graph.$D.startArrow, _t.graph.$D.lineColor),
+            endArrow: handleArrowStyle(_t.graph.$D.endArrow, _t.graph.$D.lineColor)
+          })
+        // }
         if (_t.config.tooltip.dragEdge) {
           _t.toolTip.create.call(_t, {
             left: event.canvasX,
@@ -382,6 +459,14 @@ export default {
               y: event.y
             }
           })
+          // if(_t.graph.$D.lineDash == 'doubleArticle'){
+            _t.graph.updateItem(_t.drawLine.doubleLine, {
+              target: {
+                x: event.x,
+                y: event.y
+              }
+            })
+          // }
           if (_t.config.tooltip.dragEdge) {
             _t.toolTip.update.call(_t, {
               left: event.canvasX,
@@ -417,6 +502,17 @@ export default {
                 end: endModel.id
               }
             })
+            // if(_t.graph.$D.lineDash == 'doubleArticle'){
+              _t.graph.updateItem(_t.drawLine.doubleLine, {
+                target: endModel.id,
+                targetAnchor: targetAnchor ? targetAnchor.anchorIndex : '',
+                // 存储起始点ID，用于拖拽节点时更新线条
+                attrs: {
+                  start: startModel.id,
+                  end: endModel.id
+                }
+              })
+            // }
             // 记录操作日志
             _t.graph.emit('editor:record', 'drawLine stop')
           }
@@ -425,6 +521,7 @@ export default {
           _t.toolTip.destroy.call(_t)
         }
         _t.drawLine.currentLine = null
+        if(_t.graph.$D.lineDash == 'doubleArticle') _t.drawLine.doubleLine = null;
         _t.drawLine.isMoving = false
         _t.info = null
       }
@@ -539,10 +636,26 @@ export default {
           }, group)
           // 更新节点
           _t.graph.updateItem(_t.info.node, attrs)
-          _t.graph.refreshItem(_t.info.node)
           if (_t.config.shapeControlPoint.updateEdge) {
             // 更新边
             utils.edge.update(_t.info.node, _t.graph)
+          }
+          // 更新绑定属性位置
+          updateBA(_t.graph, _t.info.node._cfg.id, [1, 2, 3], 'position')
+          // 更新操作
+          switch(_t.info.node.getModel().is){// 柱状图
+            case 'chartColumnar':
+              updateWho(_t.graph, _t.info.node._cfg.id, 'chartColumnar')
+            break;
+            case 'pieChart':// 饼图
+              updateWho(_t.graph, _t.info.node._cfg.id, 'pieChart')
+            break;
+            case 'chartFracture':// 折线图
+              updateWho(_t.graph, _t.info.node._cfg.id, 'chartFracture')
+            break;
+            case 'ringDiagram':// 环形图
+              updateWho(_t.graph, _t.info.node._cfg.id, 'ringDiagram')
+            break;
           }
         }
       },
@@ -777,6 +890,7 @@ export default {
                 if (_t.config.dragNode.updateEdge) {
                   // 更新边
                   utils.edge.update(_t.info.node, _t.graph)
+                  updateWho(_t.graph, _t.info.node._cfg.id, 'doubleArticle')
                 }
                 if (_t.config.tooltip.dragNode) {
                   const { width, height } = _t.info.node.getModel()

@@ -22,191 +22,220 @@ export default {
     return keyShape
   },
   afterDraw(cfg, group) {
-    if (!Store.getters.edgeAnimate) return
-    let backA = null, backB = null, backC = null;
-    // 获得当前边的第一个图形，这里是边本身的 path
-    console.log(group.get('children'))
-    let shape = group.get('children')[0];
-    console.log(shape)
-    // 边 path 的起点位置
-    console.log(shape.getPoint(1))
-    const startPoint = shape.getPoint(0) || cfg.startPoint;
-    console.log(startPoint)
-    let sinStart1 = startPoint.y / Math.sqrt(Math.pow(startPoint.x, 2) + Math.pow(startPoint.y, 2));
-    let cosStart1 = startPoint.x / Math.sqrt(Math.pow(startPoint.x, 2) + Math.pow(startPoint.y, 2))
-    let topX1 = startPoint.x - sinStart1 * 10;
-    let topY1 = startPoint.y - cosStart1 * 10
-    let bottomX1 = startPoint.x + sinStart1 * 10
-    let bottomY1 = startPoint.y + cosStart1 * 10
-    // 添加红色 circle 图形
-    let myPath = group.addShape('path', {
-      attrs: {
-        x: startPoint.x,
-        y: startPoint.y,
-        path:[
-          [
-            'M',
-            topX1,
-            topY1
-          ],
-          [
-            'L',
-            startPoint.x + cosStart1 * 10,
-            startPoint.y - sinStart1 * 10
-          ],
-          [
-            'L',
-            bottomX1,
-            bottomY1
-          ],
-          ['Z']
-        ],
-        fill: '#59abfe',
-        stroke: 'pink'
-      }
-    });
-    var r1 = 50;
-  var radius = Math.PI;
-    // 对红色圆点添加动画
-    myPath.animate({
-      // 动画重复
-      repeat: true,
-      // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
-      onFrame(ratio) {
-        // 根据比例值，获得在边 path 上对应比例的位置。
-        let tmpPoint = shape.getPoint(ratio) || cfg.startPoint;
-        // 返回需要变化的参数集，这里返回了位置 x 和 y
-        let sinStart = tmpPoint.y / Math.sqrt(Math.pow(tmpPoint.x, 2) + Math.pow(tmpPoint.y, 2));
-        let cosStart = tmpPoint.x / Math.sqrt(Math.pow(tmpPoint.x, 2) + Math.pow(tmpPoint.y, 2))
-        let topX = tmpPoint.x - sinStart * 10;
-        let topY = tmpPoint.y - cosStart * 10
-        let bottomX = tmpPoint.x + sinStart * 10
-        let bottomY = tmpPoint.y + cosStart * 10
-         
-        return {
-          x: tmpPoint.x,
-          y: tmpPoint.y,
-         
-          path:[
-            [
-              'M',
-              bottomX,
-              bottomY
-              
-            ],
-            [
-              'L',
-              tmpPoint.x + sinStart * 10,
-              tmpPoint.y - cosStart * 10
-            ],
-            [
-              'L',
-              topX,
-              topY
-            ],
-            ['Z']
-          ],
-        };
-      }
-    }, 3000); // 一次动画的时间长度
-    // 画圆
-    let r = 3
-    if(!backA || !backB || !backC){
-      // 第一个背景圆
-      backA = group.addShape('circle', {
-        zIndex: -3,
+    setTimeout(() => {
+      if (!Store.getters.edgeAnimate) return
+      let backA = null, backB = null, backC = null;
+      // 获得当前边的第一个图形，这里是边本身的 path
+      let shape = group.get('children')[0];
+      // 边 path 的起点位置
+      const startPoint = shape.getPoint(0) || cfg.startPoint;
+      // let sinStart1 = startPoint.y / Math.sqrt(Math.pow(startPoint.x, 2) + Math.pow(startPoint.y, 2));
+      // let cosStart1 = startPoint.x / Math.sqrt(Math.pow(startPoint.x, 2) + Math.pow(startPoint.y, 2))
+      // let topX1 = startPoint.x - sinStart1 * 10;
+      // let topY1 = startPoint.y - cosStart1 * 10
+      // let bottomX1 = startPoint.x + sinStart1 * 10
+      // let bottomY1 = startPoint.y + cosStart1 * 10
+      // // 添加红色 circle 图形
+      // let myPath = group.addShape('path', {
+      //   attrs: {
+      //     x: startPoint.x,
+      //     y: startPoint.y,
+      //     path: [
+      //       [
+      //         'M',
+      //         topX1,
+      //         topY1
+      //       ],
+      //       [
+      //         'L',
+      //         startPoint.x + cosStart1 * 10,
+      //         startPoint.y - sinStart1 * 10
+      //       ],
+      //       [
+      //         'L',
+      //         bottomX1,
+      //         bottomY1
+      //       ],
+      //       ['Z']
+      //     ],
+      //     fill: '#59abfe',
+      //     stroke: 'pink'
+      //   }
+      // });
+      // // 对红色圆点添加动画
+      // myPath.animate({
+      //   // 动画重复
+      //   repeat: true,
+      //   // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
+      //   onFrame(ratio) {
+      //     // 根据比例值，获得在边 path 上对应比例的位置。
+      //     let tmpPoint = shape.getPoint(ratio) || cfg.startPoint;
+      //     // 返回需要变化的参数集，这里返回了位置 x 和 y
+      //     let sinStart = tmpPoint.y / Math.sqrt(Math.pow(tmpPoint.x, 2) + Math.pow(tmpPoint.y, 2));
+      //     let cosStart = tmpPoint.x / Math.sqrt(Math.pow(tmpPoint.x, 2) + Math.pow(tmpPoint.y, 2))
+      //     let topX = tmpPoint.x - sinStart * 10;
+      //     let topY = tmpPoint.y - cosStart * 10
+      //     let bottomX = tmpPoint.x + sinStart * 10
+      //     let bottomY = tmpPoint.y + cosStart * 10
+
+      //     return {
+      //       x: tmpPoint.x,
+      //       y: tmpPoint.y,
+
+      //       path: [
+      //         [
+      //           'M',
+      //           bottomX,
+      //           bottomY
+
+      //         ],
+      //         [
+      //           'L',
+      //           tmpPoint.x + sinStart * 10,
+      //           tmpPoint.y - cosStart * 10
+      //         ],
+      //         [
+      //           'L',
+      //           topX,
+      //           topY
+      //         ],
+      //         ['Z']
+      //       ],
+      //     };
+      //   }
+      // }, 3000); // 一次动画的时间长度
+      let myCircle = group.addShape('circle', {
+        zIndex: 1000,
         attrs: {
           x: startPoint.x,
           y: startPoint.y,
-          r: r,
-          fill: 'black',
-          opacity:1
-        }
-      });
-      // 第二个背景圆
-      backB = group.addShape('circle', {
-        zIndex: -2,
-        attrs: {
-          x: startPoint.x,
-          y: startPoint.y,
-          r: r,
-          fill: 'red',
-          opacity: 1
-        }
-      });
-      // 第三个背景圆
-      backC = group.addShape('circle', {
-        zIndex: -1,
-        attrs: {
-          x: startPoint.x,
-          y: startPoint.y,
-          r: r,
-          fill: 'blue',
-          opacity: 0.3
+          fill: '#409efe',
+          r: 3
         }
       })
-    }
-    group.sort(); // 排序，根据 zIndex 排序
-    // 第一个背景圆逐渐放大，并消失
-    backA.animate({
-      r: r + 10,
-      opacity: 0.1,
-      repeat: true // 循环
-    }, 3000, 'easeCubic', null, 0) // 无延迟
-    // 第二个背景圆逐渐放大，并消失
-    backB.animate({
-      r: r + 10,
-      opacity: 0.1,
-      repeat: true // 循环
-    }, 3000, 'easeCubic', null, 1000) // 1 秒延迟
-    // 第三个背景圆逐渐放大，并消失
-    backC.animate({
-      r: r + 10,
-      opacity: 0.1,
-      repeat: true // 循环
-    }, 3000, 'easeCubic', null, 2000) // 2 秒延迟
-    backA.animate({
-      // 动画重复
-      repeat: true,
-      // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
-      onFrame(ratio) {
-        // 根据比例值，获得在边 path 上对应比例的位置。
+      myCircle.animate(ratio => {
         const tmpPoint = shape.getPoint(ratio) || {};
         // 返回需要变化的参数集，这里返回了位置 x 和 y
         return {
           x: tmpPoint.x,
           y: tmpPoint.y,
-        };
+        }
+      }, {
+        duration: 3000,
+        repeat: true,
+        delay: 0
+      })
+      // 画圆
+      let r = 3
+      if (!backA || !backB || !backC) {
+        // 第一个背景圆
+        backA = group.addShape('circle', {
+          zIndex: -3,
+          attrs: {
+            x: startPoint.x,
+            y: startPoint.y,
+            r: r,
+            fill: 'black',
+            opacity: 0.5,
+          }
+        });
+        backA.animate({
+          r: r + 10,
+          opacity: 0
+        },
+          {
+            repeat: true,
+            duration: 3000,
+            delay: 0,
+            easing: 'easeCubic',
+          });
+        // 第二个背景圆
+        backB = group.addShape('circle', {
+          zIndex: -2,
+          attrs: {
+            x: startPoint.x,
+            y: startPoint.y,
+            r: r,
+            fill: 'red',
+            opacity: 0.7
+          }
+        });
+        backB.animate({
+          r: r + 10,
+          opacity: 0
+        },
+          {
+            repeat: true,
+            duration: 3000,
+            delay: 1000,
+            easing: 'easeCubic',
+          });
+        // 第三个背景圆
+        backC = group.addShape('circle', {
+          zIndex: -1,
+          attrs: {
+            x: startPoint.x,
+            y: startPoint.y,
+            r: r,
+            fill: 'blue',
+            opacity: 0.9
+          }
+        })
+        backC.animate({
+          r: r + 10,
+          opacity: 0
+        },
+          {
+            repeat: true,
+            duration: 3000,
+            delay: 2000,
+            easing: 'easeCubic'
+          });
       }
-    }, 3000) 
-    backB.animate({
-      // 动画重复
-      repeat: true,
-      // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
-      onFrame(ratio) {
-        // 根据比例值，获得在边 path 上对应比例的位置。
-        const tmpPoint = shape.getPoint(ratio) || {};
-        // 返回需要变化的参数集，这里返回了位置 x 和 y
-        return {
-          x: tmpPoint.x,
-          y: tmpPoint.y,
-        };
-      }
-    }, 3000)
-    backC.animate({
-      // 动画重复
-      repeat: true,
-      // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
-      onFrame(ratio) {
-        // 根据比例值，获得在边 path 上对应比例的位置。
-        const tmpPoint = shape.getPoint(ratio) || {};
-        // 返回需要变化的参数集，这里返回了位置 x 和 y
-        return {
-          x: tmpPoint.x,
-          y: tmpPoint.y,
-        };
-      }
-    }, 3000)
+      backA.animate({
+        // 动画重复
+        repeat: true,
+        // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
+        onFrame(ratio) {
+          // 根据比例值，获得在边 path 上对应比例的位置。
+          const tmpPoint = shape.getPoint(ratio) || {};
+          // 返回需要变化的参数集，这里返回了位置 x 和 y
+          return {
+            x: tmpPoint.x,
+            y: tmpPoint.y,
+          };
+        }
+      }, 3000)
+      backB.animate({
+        // 动画重复
+        repeat: true,
+        // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
+        onFrame(ratio) {
+          // 根据比例值，获得在边 path 上对应比例的位置。
+          const tmpPoint = shape.getPoint(ratio) || {};
+          // 返回需要变化的参数集，这里返回了位置 x 和 y
+          return {
+            x: tmpPoint.x,
+            y: tmpPoint.y,
+          };
+        }
+      }, 3000)
+      backC.animate({
+        // 动画重复
+        repeat: true,
+        // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
+        onFrame(ratio) {
+          // 根据比例值，获得在边 path 上对应比例的位置。
+          const tmpPoint = shape.getPoint(ratio) || {};
+          // 返回需要变化的参数集，这里返回了位置 x 和 y
+          return {
+            x: tmpPoint.x,
+            y: tmpPoint.y,
+          };
+        }
+      }, 3000)
+      group.sort(); // 排序，根据 zIndex 排序
+    })
   },
   setState(name, value, item) {
     // 设置边状态

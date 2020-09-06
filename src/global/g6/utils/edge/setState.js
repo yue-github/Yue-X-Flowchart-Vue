@@ -21,7 +21,7 @@ export default function (name, value, item) {
         // 绘制边动画
         // drawAnimate(item.getModel(), item.getContainer())
       } else {
-        edge.attr(config.edge.style.inactive)
+          edge.attr(config.edge.style.inactive)
         // 销毁边动画
         // destroyAnimate(item.getModel(), item.getContainer())
       }

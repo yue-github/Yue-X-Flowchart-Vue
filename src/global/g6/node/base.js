@@ -12,7 +12,6 @@ export default {
   options: {},
   drawShape (cfg, group) {
     const shapeType = this.shapeType
-    console.log(shapeType)
     const style = this.getShapeStyle(cfg)
     const keyShape = group.addShape(shapeType, {
       attrs: style,
@@ -24,7 +23,7 @@ export default {
   },
   getAnchorPoints (cfg) {
     const { anchorPoints, width, height } = cfg
-    const keyShape = cfg.type == 'iconfont' ? this.pathKeyShape : this.keyShape;// 2020-7-26 by WuTongYue
+    let keyShape = (cfg.type == 'iconfont' || cfg.type.includes('image')) ? this.pathKeyShape : this.keyShape;// 2020-7-26 by WuTongYue
     const points = []
     if (anchorPoints && anchorPoints.length) {
       for (let i = 0, len = anchorPoints.length; i < len; i++) {
@@ -66,7 +65,6 @@ export default {
       shapeStyle.fontSize = (shapeStyle.width + shapeStyle.height) / 2
       shapeStyle.shape = 'iconfont'
     }
-    
     const style = G6Util.mix({}, defaultStyle, shapeStyle)
     // 更新图形
     this.updateShape(cfg, item, style)

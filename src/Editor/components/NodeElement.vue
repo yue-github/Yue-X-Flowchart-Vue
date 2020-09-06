@@ -26,6 +26,16 @@
         position: relative;
         overflow: hidden;
       }
+      .content-liars{
+        position: relative;
+        .content-liars-child{
+          width:100%;
+          height:100%;
+          position:absolute;
+          top:0;
+          left:0
+        }
+      }
     }
   }
  .icon-content{
@@ -66,10 +76,14 @@
     @mousedown="handleMouseDown"
     :class="{'icon-node-element': info.type == 'iconfont' ? true : false}"
   >
-    <div class="content" :class="{ iconContent: info.type == 'iconfont' ? true : false }" :title="title">
-      <svg class="icon" v-html="info.icon" v-if="info.type != 'iconfont'">
-      </svg>
-      <span class="iconfont my-icon" style="margin:0;padding:0" v-html="info.text" v-else :style="{'--color': info.color, '--size': info.size + 'px'}"></span>
+    <div class="content" :class="{ iconContent: info.type == 'iconfont' }" :title="title">
+      <div class="content-liars" v-if="info.type.includes('image')">
+        <!--气！img标签好像会丢失事件-->
+        <img :src="info.img" class="content-img" alt="" :style="{ 'width': info.width + 'px', 'height': info.height + 'px' }"></img>
+        <div style="" class="content-liars-child"></div>
+      </div>
+      <svg class="icon" v-html="info.icon" v-show="isShow"></svg>
+      <span class="iconfont my-icon" style="margin:0;padding:0" v-html="info.text" :style="{'--color': info.color, '--size': info.size + 'px'}" v-if="info.type == 'iconfont'"></span>
     </div>
   </div>
 </template>
@@ -107,6 +121,10 @@
       }
     },
     computed: {
+      isShow(){
+        let _t = this;
+        return !(_t.info.type == 'iconfont' || _t.info.type.includes('image'))
+      },
       elementStyle () {
         const _t = this
         let style = {}

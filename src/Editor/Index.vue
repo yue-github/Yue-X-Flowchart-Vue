@@ -188,6 +188,11 @@
           fitViewPadding: 20,
           autoPaint: true,
           animate: true,
+          nodeStateStyles: {
+            hover: {
+              opacity: 0.8,
+            },
+          },
           // renderer: 'svg',
           modes: {
             // default: ['collapse-expand', 'drag-canvas', 'drag-node'],
@@ -204,7 +209,7 @@
                     updateEdge: true
                   },
                   // 是否支持在节点上添加文本
-                  nodeLabel: true,
+                  nodeLabel: false,
                   // 是否支持在边上添加文本
                   edgeLabel: true,
                   // tooltip 是否启用
@@ -251,13 +256,13 @@
         _t.editor.$C = G6.$C
         // 挂载编辑器$D命名空间，用于Vue组件与Graph之间传值
         _t.editor.$D = {
-          fill: '#FFFFFF',
+          fill: 'red',
           fillOpacity: 1,
-          lineColor: '#000000',
+          lineColor: 'red',
           strokeOpacity: 1,
-          lineWidth: 1,
-          lineType: 'x-line',
-          lineDash: 'solid',
+          lineWidth: 5,
+          lineType: 'doubleArticle',
+          lineDash: 'doubleArticle',
           startArrow: false,
           endArrow: false,
           lineAppendWidth: 10,
@@ -423,6 +428,8 @@
           textOrigin: info.textOrigin,
           iconSize: (info.width + info.height) / 2,// 根据宽高自动算size大小
           label: info.defaultLabel,
+          img: info.img,
+          is: info.is,
           labelCfg: {
             position: 'center',
             style: {
@@ -430,8 +437,10 @@
               stroke: '#000000',
             }
           },
-          width: info.width,
-          height: info.height,
+          trendData: info.trendData,
+          // 单独对渲染结果宽高设置
+          width: info.renderWidth ? info.renderWidth : info.width,
+          height: info.renderHeight ? info.renderHeight : info.height,
           minWidth: info.minWidth,
           minHeight: info.minHeight,
           // FIXME 定义锚点坐标
@@ -567,7 +576,17 @@
             _t.editor.getEdges().forEach(edge => {
               if (edge.hasState('active')) {
                 isRecord = true
-                _t.editor.removeItem(edge)
+                // 辕门射戟--标识双线
+                const sameFlag = edge._cfg.model.id.split('-|-')[1];
+                let doubleArticles = _t.editor.getEdges().filter(_ => _._cfg.model.id.includes(sameFlag));
+                if(edge._cfg.model.attrs.flag == 'doubleArticle'){
+                  // 横扫千军---删除双线
+                  doubleArticles.forEach(edge => {
+                    _t.editor.removeItem(edge)
+                  })
+                }else{
+                  _t.editor.removeItem(edge)
+                }
               }
             })
             // 更新currentItem
@@ -683,6 +702,26 @@
             _t.editor.$D.lineDash = info.data
             _t.editor.getEdges().forEach(edge => {
               if (edge.hasState('active')) {
+                console.log(info.data)
+                if(info.data == 'doubleArticle'){
+                  // 重见天日
+                  const sameFlag = edge._cfg.model.id.split('-|-')[1];
+                  let doubleArticles = _t.editor.getEdges().filter(_ => _._cfg.model.id.includes(sameFlag));
+                   _t.editor.updateItem(doubleArticles.find(_ => _._cfg.model.attrs.flag == 'doubleLine'), {
+                     visible: true
+                   })
+                }else{
+                   // 归隐田园
+                  const sameFlag = edge._cfg.model.id.split('-|-')[1];
+                  let doubleArticles = _t.editor.getEdges().filter(_ => _._cfg.model.id.includes(sameFlag));
+                   _t.editor.updateItem(doubleArticles.find(_ => _._cfg.model.attrs.flag == 'doubleLine'), {
+                     visible: false
+                   })
+                }
+                // 移花接木
+                // if(edge._cfg.model.attrs.flag == 'doubleLine'){
+                //   edge = _t.editor.getEdges().find(_ => _._cfg.model.attrs.flag == 'doubleArticle')
+                // }
                 isRecord = true
                 const { style } = edge.getModel()
                 _t.editor.updateItem(edge, {

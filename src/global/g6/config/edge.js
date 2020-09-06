@@ -21,6 +21,9 @@ export default {
     }
   },
   type: {
+    doubleArticle: {
+      lineDash: [0, 0]
+    },
     solid: {
       lineDash: []
     },

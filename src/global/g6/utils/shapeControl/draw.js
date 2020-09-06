@@ -65,6 +65,7 @@ export default function (cfg, group) {
   if (shapeControl && shapeControl.hasOwnProperty('rotate') && shapeControl.rotate) {
     const rotateW = 20
     const rotateH = 20
+    if(cfg.type == "image-chart") return;
     group.addShape('image', {
       id: id + '_shape_control_rotate',
       name: 'shapeControlRotate',

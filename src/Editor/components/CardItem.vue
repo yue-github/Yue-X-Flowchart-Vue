@@ -47,6 +47,12 @@
     display: inline-block;
     width: 100%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    &.image-chart{
+      display:flex;
+      justify-content: space-evenly;
+      align-items:center;
+      flex-wrap: wrap;
+    }
   }
   .icon-body {
     display: flex;
@@ -70,7 +76,7 @@
       <div
         class="body"
         v-show="!isFolded"
-        :class="{ 'icon-body': who == 'Primitives' ? true : false }"
+        :class="{ 'icon-body': who == 'Primitives' ? true : false, 'image-chart': who == 'Chart' || who == 'Image' }"
       >
         <slot></slot>
       </div>

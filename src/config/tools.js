@@ -796,7 +796,18 @@ export default function (system = {}, disableTools = [], enableTools = [], short
       selected: 0,
       lockLabel: false,
       // 子节点
-      children: [
+      children: [// my-line
+        {
+          name: 'doubleArticle',
+          label: 'doubleArticle',
+          lang: '',
+          type: 'normal',
+          icon: 'solid',
+          data: 'doubleArticle',
+          enable: true,
+          disabled: false,
+          divider: false
+        },
         {
           name: 'solid',
           label: 'solid',

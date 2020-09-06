@@ -185,6 +185,178 @@ export default function (enableMaterials) {
           }
       ]
     },
+    // 自定义图表
+    {
+      name: 'Chart',
+      label: 'Chart',
+      lang: 'Y10302',
+      enable: true,
+      children:[
+        {
+          type: 'image-chart',
+          label: '柱状图',
+          is: 'chartColumnar',// 是什么类型标记
+          img: 'https://www.coral3.com/img/zhu.png',
+          defaultLabel: '',
+          enable: true,
+          width: 53,
+          trendData: [
+            { genre: 'Sports', sold: 275 },
+            { genre: 'Strategy', sold: 115 },
+            { genre: 'Action', sold: 120 },
+            { genre: 'Shooter', sold: 350 },
+            { genre: 'Other', sold: 150 },
+          ], 
+          renderWidth: 200,
+          renderHeight: 100,
+          height: 53,
+          minWidth: 200,
+          minHeight: 100,
+          size: 50,
+          anchorPoints: anchorPoints,
+          shapeControl: shapeControl,
+          // icon: `https://www.coral3.com/img/zhu.png`
+        },
+        {
+          type: 'image-chart',
+          label: '饼状图',
+          img: 'https://www.coral3.com/img/bin.png',
+          defaultLabel: '',
+          enable: true,
+          is: 'pieChart',// 是什么类型标记
+          width: 60,
+          height: 60,
+          minWidth: 200,
+          minHeight: 123,
+          trendData: [
+            { genre: 'Sports', sold: 275 },
+            { genre: 'Strategy', sold: 115 },
+            { genre: 'Action', sold: 120 },
+            { genre: 'Shooter', sold: 350 },
+            { genre: 'Other', sold: 150 },
+          ], 
+          renderWidth: 200,
+          renderHeight: 123,// 最终渲染的高度
+          anchorPoints: anchorPoints,
+          shapeControl: shapeControl,
+          icon: `https://www.coral3.com/img/bin.png`
+        },
+        {
+          type: 'image-chart',
+          label: '折线图',
+          is: 'chartFracture',// 是什么类型标记
+          img: 'https://www.coral3.com/img/zhe.png',
+          defaultLabel: '',
+          enable: true,
+          width: 53,
+          height: 53,
+          minWidth: 200,
+          minHeight: 100,
+          trendData: [
+            { genre: 'Sports', sold: 275 },
+            { genre: 'Strategy', sold: 115 },
+            { genre: 'Action', sold: 120 },
+            { genre: 'Shooter', sold: 350 },
+            { genre: 'Other', sold: 150 },
+          ], 
+          renderWidth: 200,
+          renderHeight: 100,
+          anchorPoints: anchorPoints,
+          shapeControl: shapeControl,
+          icon: `https://www.coral3.com/img/zhe.png`
+        },
+        {
+          type: 'image-chart',
+          label: '环形图',
+          img: 'https://www.coral3.com/img/huan.png',
+          defaultLabel: '',
+          is: 'ringDiagram',// 是什么类型标记
+          enable: true,
+          width: 60,
+          height: 60,
+          minWidth: 200,
+          minHeight: 180,
+          trendData: [
+            { genre: 'Sports', sold: 275 },
+            { genre: 'Strategy', sold: 115 },
+            { genre: 'Action', sold: 120 },
+            { genre: 'Shooter', sold: 350 },
+            { genre: 'Other', sold: 150 },
+          ], 
+          renderWidth: 200,
+          renderHeight: 180,
+          anchorPoints: anchorPoints,
+          shapeControl: shapeControl,
+          icon: `https://www.coral3.com/img/huan.png`
+        }
+      ]
+    },
+    // 自定义图片
+    {
+      name: 'Image',
+      label: 'Image',
+      lang: 'Y10301',
+      enable: true,
+      children:[
+        {
+          type: 'my-image',
+          label: '柱状图',
+          img: 'https://www.coral3.com/img/zhu.png',
+          defaultLabel: '',
+          enable: true,
+          width: 53,
+          height: 53,
+          minWidth: 20,
+          minHeight: 20,
+          size: 50,
+          anchorPoints: anchorPoints,
+          shapeControl: shapeControl,
+          // icon: `https://www.coral3.com/img/zhu.png`
+        },
+        {
+          type: 'my-image',
+          label: '饼状图',
+          img: 'https://www.coral3.com/img/bin.png',
+          defaultLabel: '',
+          enable: true,
+          width: 60,
+          height: 60,
+          minWidth: 20,
+          minHeight: 20,
+          anchorPoints: anchorPoints,
+          shapeControl: shapeControl,
+          icon: `https://www.coral3.com/img/bin.png`
+        },
+        {
+          type: 'my-image',
+          label: '折线图',
+          img: 'https://www.coral3.com/img/zhe.png',
+          defaultLabel: '',
+          enable: true,
+          width: 53,
+          height: 53,
+          minWidth: 20,
+          minHeight: 20,
+          anchorPoints: anchorPoints,
+          shapeControl: shapeControl,
+          icon: `https://www.coral3.com/img/zhe.png`
+        },
+        {
+          type: 'my-image',
+          label: '环形图',
+          img: 'https://www.coral3.com/img/huan.png',
+          defaultLabel: '',
+          enable: true,
+          width: 60,
+          height: 60,
+          minWidth: 20,
+          minHeight: 20,
+          anchorPoints: anchorPoints,
+          shapeControl: shapeControl,
+          icon: `https://www.coral3.com/img/huan.png`
+        }
+      ]
+    },
     {
       name: 'general',
       label: 'General',

@@ -6,28 +6,39 @@
  * Update by 蓝之静云 on 2020/8/18
  */
 
-import Global from '@antv/g6/src/global'
-import Util from '@antv/g6/src/util'
+import Global from '@antv/g6/es/global'
+import Util from '@antv/g6/es/util'
 import base from '../base'
 import utils from '../../utils'
 import config from '../../config'
 import myBus from '@/global/utils/bus'
-import Store from '@/store'
 
 export default {
-  name: 'image',
-  extendName: 'single-shape',
+  name: 'my-image',
+  extendName: 'single-node',
   options: {
     ...base,
     shapeType: 'image',
-    getShapeStyle(cfg) {
-      const size = this.getSize(cfg)
-      const width = size[0]
-      const height = size[1]
+    getShapeStyle (cfg) {
+      cfg.style.fill = ""
+      console.log(cfg)
+      const width = cfg.width
+      const height = cfg.height
       const x = 0 - width / 2
       const y = 0 - height / 2
       const img = cfg.img
       const color = cfg.color || Global.defaultNode.color
+      const path = [
+        // 左上顶点
+        ['M', -width / 2, -height / 2],
+        // 右上顶点
+        ['L', width / 2, -height / 2],
+        // 右下顶点
+        ['L', width / 2, height / 2],
+        // 左下顶点
+        ['L', -width / 2, height / 2],
+        ['Z']
+      ]
       const style = Util.mix({}, Global.defaultNode.style, {
         // 节点的位置在上层确定，所以这里仅使用相对位置即可
         x,
@@ -36,9 +47,34 @@ export default {
         width,
         height,
         img,
+        path,
         stroke: color
       }, cfg.style)
+
       return style
+    },
+    drawShape(cfg, group) {
+      let shapeStyle = this.getShapeStyle(cfg);
+      let path = shapeStyle.path;
+      const { backgroundConfig: backgroundStyle, style, labelCfg: labelStyle } = cfg;
+      let outKeyShape;
+      const shapeType = this.shapeType
+      outKeyShape = group.addShape(shapeType, {
+        attrs: shapeStyle,
+        name: 'XFCNodeKeyShape',
+        draggable: true
+      })
+      let pathKeyShape = group.addShape('path', {
+        attrs: {
+          x: 0,
+          y: 0,
+          path,
+          ...backgroundStyle,
+        },
+        draggable: true,
+      });
+      this.pathKeyShape = pathKeyShape;
+      return outKeyShape;
     },
     // 绘制后附加锚点
     afterDraw (cfg, group) {
@@ -57,7 +93,6 @@ export default {
             // 各自图元的绑定属性文本
           ],
           bindAttrImages: [{}],// 绑定属性logo及相关信息
-          fill: 'black',
           shape: 'circle',
           opacity: 0.6,
           shadowColor: `#${(color => new Array(7 - color.length).join('0') + color)((Math.random() * 0x1000000 >>> 0).toString(16))}`,
@@ -90,7 +125,7 @@ export default {
           zIndex: -1,
           visible: false && attrs.isShow,
           attrs
-        });
+        })
         if (attrBg) {
           attrBg.on('mouseenter', function () {
             attrBg.attr({
@@ -136,6 +171,7 @@ export default {
               bgColor: '#f4b910',// 盒子背景颜色
               bgOpacity: 0.3,// 盒子背景颜色透明度
               tag: 3,// 标题右侧tag数字
+              handleLogo: require('@/assets/images/bindAttr/yellow.png'),// 手柄logo
               tagBg: '#dca00a',// 标题右侧tag数字背景
               boxBorder: '1px solid #e4b63e',// box边框设置
               titles: {// 模拟表格标题---注意字段名例如row1...与具体数据的属性需要保持一致
@@ -157,6 +193,7 @@ export default {
               bgColor: '#f68596',// 盒子背景颜色
               bgOpacity: 0.5,// 盒子背景颜色透明度
               tag: 2,// 标题右侧tag数字
+              handleLogo: require('@/assets/images/bindAttr/red.png'),// 手柄logo
               tagBg: '#bf0c22',// 标题右侧tag数字背景
               boxBorder: '1px solid #e88c9f',// box边框设置
               titles: {// 模拟表格标题---注意字段名例如row1...与具体数据的属性需要保持一致
@@ -183,6 +220,7 @@ export default {
               bgColor: '#6ce6b0',// 盒子背景颜色
               bgOpacity: 0.5,// 盒子背景颜色透明度
               tag: 1,// 标题右侧tag数字
+              handleLogo: require('@/assets/images/bindAttr/green.png'),// 手柄logo
               tagBg: '#0cb768',// 标题右侧tag数字背景
               boxBorder: '1px solid #20c283',// box边框设置
               titles: {// 模拟表格标题---注意字段名例如row1...与具体数据的属性需要保持一致
@@ -214,7 +252,6 @@ export default {
         return json
       })
       // 过滤不需要展示的部分
-      bindAttr.bindAttrImages = bindAttr.bindAttrImages.filter(_ => Store.getters.bindAttrList.includes(_.data.id))
       bindAttr.bindAttrImages.forEach(attrs => {
         attrs.flag = 'bindAttr' //标识是绑定属性
         const imgShape = group.addShape('image', {
@@ -235,7 +272,7 @@ export default {
             })
           })
           imgShape.on('click', _e => {
-            console.log(_e.target._attrs.text)
+            console.log(_e)
             imgShape.attr({
               ...config.bindAttr.style.default,
               ...config.bindAttr.style.active

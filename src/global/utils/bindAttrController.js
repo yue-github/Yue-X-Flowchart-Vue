@@ -11,8 +11,8 @@ export const updateBA = (graph, nodeId, attrIds = [], type, tableData = '') => {
     if (!graph || !nodeId) throw new Error('graph or nodeId must be requested!')
     let node = graph.findById(nodeId)
     if (!node || attrIds.length == 0) return 'update failed!'
-    let children = node._cfg.group._cfg.children
-    let originBindAttrs = children.filter(_ => _._attrs.flag == 'bindAttr')
+    let children = node._cfg.group.cfg.children
+    let originBindAttrs = children.filter(_ => _.attrs.flag == 'bindAttr')
     if (Object.prototype.toString.call(type) === '[object Boolean]') {
       originBindAttrs.map((_, _index) => {
         if (attrIds.includes(_._attrs.data.id)) {
@@ -24,31 +24,31 @@ export const updateBA = (graph, nodeId, attrIds = [], type, tableData = '') => {
       switch (type) {
         case 'position':// 更新位置
           // 更新外圈
-          const originBindCircle = children.filter(_ => _._attrs.flag == 'bindCircle')
+          const originBindCircle = children.filter(_ => _.attrs.flag == 'bindCircle')
           const model = node.getModel()
           const size = model.size
           originBindCircle.map((i, _index, _t) => {
-            if (i._attrs) {
+            if (i.attrs) {
               if (_index === 0) {
-                originBindCircle[_index]._attrs.x = (size[0] / 2) - i._attrs.r // 最右边一个---> 往左排
-                originBindCircle[_index]._attrs.y = (size[1] / 2) + i._attrs.r
+                originBindCircle[_index].attrs.x = (size[0] / 2) - i.attrs.r // 最右边一个---> 往左排
+                originBindCircle[_index].attrs.y = (size[1] / 2) + i.attrs.r
               } else {
-                i._attrs.r = size[0] / 10
-                if (_t[_index - 1]._attrs) {
-                  originBindCircle[_index]._attrs.x = _t[_index - 1]._attrs.x - (i._attrs.r * 2) - _t[_index - 1]._attrs.span
-                  originBindCircle[_index]._attrs.y = _t[_index - 1]._attrs.y
+                i.attrs.r = size[0] / 10
+                if (_t[_index - 1].attrs) {
+                  originBindCircle[_index].attrs.x = _t[_index - 1].attrs.x - (i.attrs.r * 2) - _t[_index - 1].attrs.span
+                  originBindCircle[_index].attrs.y = _t[_index - 1].attrs.y
                 } else {
-                  originBindCircle[_index]._attrs.x = i._attrs.x + (i._attrs.r * 2) + _t[_index - 1]._attrs.span
+                  originBindCircle[_index].attrs.x = i.attrs.x + (i.attrs.r * 2) + _t[_index - 1].attrs.span
                 }
               }
-              originBindCircle[_index]._attrs.span = 5
+              originBindCircle[_index].attrs.span = 5
             }
           })
           // 更新logo
           if (originBindCircle.length == 0) break
           originBindAttrs.map((i, _index) => {
-            originBindAttrs[_index]._attrs.x = originBindCircle[_index]._attrs.x - (i._attrs.width / 2)
-            originBindAttrs[_index]._attrs.y = originBindCircle[_index]._attrs.y - (i._attrs.height / 2)
+            originBindAttrs[_index].attrs.x = originBindCircle[_index].attrs.x - (i.attrs.width / 2)
+            originBindAttrs[_index].attrs.y = originBindCircle[_index].attrs.y - (i.attrs.height / 2)
           })
           break
       }

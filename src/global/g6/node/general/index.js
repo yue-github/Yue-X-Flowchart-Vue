@@ -34,6 +34,8 @@ import and from './and'
 import dataStorage from './data-storage'
 import bidirectionalArrow from './bidirectional-arrow'
 import arrow from './arrow'
+import myImage from './my-image'
+import imageChart from './image-chart'
 
 export default {
   rectangle,
@@ -43,6 +45,7 @@ export default {
   ellipse,
   square,
   iconfont,
+  myImage,
   circle,
   process,
   diamond,
@@ -65,5 +68,6 @@ export default {
   and,
   dataStorage,
   bidirectionalArrow,
-  arrow
+  arrow,
+  imageChart
 }

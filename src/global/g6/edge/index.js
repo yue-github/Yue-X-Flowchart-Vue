@@ -7,11 +7,13 @@
 import line from './line'
 import cubic from './cubic'
 import broken from './broken'
+import doubleArticle from './doubleArticle'
 
 const obj = {
   line,
   cubic,
-  broken
+  broken,
+  doubleArticle
 }
 
 export default function (G6) {

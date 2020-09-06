@@ -15,6 +15,12 @@
     .icon-card-item{
       box-sizing:border-box;
     }
+    .single-image{
+      width:46%;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 </style>
 
@@ -27,13 +33,14 @@
       :enableFold="true"
       :bold="true"
       :who="item.name"
-      :class="{ 'icon-card-item': item.name == 'Primitives' ? true : false }"
+      :class="{ 'icon-card-item': item.name == 'Primitives' ? true : false}"
     >
       <NodeElement
         v-for="(child, childIndex) in item.children.filter(target => target.enable)"
         :key="childIndex"
         :title="child.label"
         :info="child"
+        :class="{ 'single-image': child.type == 'image' }"
       >
       </NodeElement>
     </CardItem>

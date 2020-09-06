@@ -74,6 +74,8 @@ export default {
   L103000: 'Materials',
   L10301: 'utils',
   L103011: 'Primitives',
+  Y10301: 'Image',
+  Y10302: 'Chart',
   L10302: 'Miscellaneous',
   L10303: 'Advanced',
   L10304: 'Basic',

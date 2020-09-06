@@ -11,6 +11,7 @@ import dottedNode from './dottedNode'
 import edgeAnimate from './edgeAnimate'
 import shapeControl from './shapeControl'
 import edge from './edge'
+import bindAttr from './bindAttr'
 
 export default {
   anchor,
@@ -18,5 +19,6 @@ export default {
   dottedNode,
   edgeAnimate,
   shapeControl,
-  edge
+  edge,
+  bindAttr
 }
