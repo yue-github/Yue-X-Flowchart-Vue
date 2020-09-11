@@ -219,9 +219,9 @@ export default {
         doubleArticles.forEach(edge => {
           _t.graph.setItemState(edge, 'active', true)
         })
-        if(event.item.getModel().attrs.flag == 'doubleLine'){
-          _t.graph.setItemState(event.item, 'active', false)
-        }
+        // if(event.item.getModel().attrs.flag == 'doubleLine'){
+        //   _t.graph.setItemState(event.item, 'active', false)
+        // }
       })
       if (_t.info && _t.info.type === 'drawLine') {
         _t[_t.info.type].stop.call(_t, event)
@@ -244,9 +244,9 @@ export default {
         doubleArticles.forEach(edge => {
           _t.graph.setItemState(edge, 'active', true)
         })
-        if(event.item.getModel().attrs.flag == 'doubleLine'){
-          _t.graph.setItemState(event.item, 'active', false)
-        }
+        // if(event.item.getModel().attrs.flag == 'doubleLine'){
+        //   _t.graph.setItemState(event.item, 'active', false)
+        // }
       })
       _t.graph.emit('editor:contextmenu', {
         type: 'edge',
