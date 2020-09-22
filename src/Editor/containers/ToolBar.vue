@@ -191,7 +191,7 @@
                         ></XIcon>
                       </template>
                       <template v-else-if="child.type === 'link'">
-                        <a class="link" :href="child.link" target="_blank" style="color: #333333;">
+                        <a class="link" :href="child.link" target="_blank">
                           <XIcon :iconfont="child.icon" :img="child.img" :label="$t(child.lang)"></XIcon>
                         </a>
                       </template>
@@ -268,7 +268,9 @@
     computed: {
       toolBarStyle () {
         const _t = this
-        const style = {}
+        const style = {
+          
+        }
         // 处理展开
         if (_t.isExpand) {
           style.top = 0
@@ -280,6 +282,7 @@
       toolMap () {
         const _t = this
         const toolMap = {}
+        console.log(_t.toolList)
         _t.toolList.forEach(item => {
           if (item.enableTool && item.enable && item.toolbar && item.toolbar.enable) {
             const position = item.toolbar.position

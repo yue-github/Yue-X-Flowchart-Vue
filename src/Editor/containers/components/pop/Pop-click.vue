@@ -1,6 +1,9 @@
 <template>
     <div class="main" :style="doMyMsg">
         <div class="bg-control" :style="{background: myMsg.data.bgColor, opacity: myMsg.data.bgOpacity}"></div>
+        <div class="handleLogo" v-if="!myMsg.handleLogoIsHide">
+            <img :src="myMsg.data.handleLogo" alt="">
+        </div>
         <div class="container">
             <div class="title">
                 <span class="title-msg">
@@ -30,7 +33,7 @@
     export default {
         data(){
             return {
-                
+
             }
         },
         props:{
@@ -52,7 +55,7 @@
                     }
                     renderData.push(json)
                 }
-                console.log(renderData)
+                // console.log(renderData)
                 return renderData;
             },
             WHactive(){
@@ -67,16 +70,15 @@
     }
 </script>
 
-<style lang="less" scoped>
-.main{
+<style scoped lang="less" rel="stylesheet/less">
+  .main {
     min-width: 150px;
     display:flex;
     justify-content: center;
     align-items: center;
     border-radius: 0px 15px 15px 15px;
     // box-shadow: 4px 2px 6px #ccc;
-    position:fixed;
-    overflow: hidden;
+    position: fixed;
     z-index:115;
     .bg-control{
         width:100%;
@@ -145,5 +147,11 @@
     background:#fff;
     margin: 6px 0px;
     box-shadow: 0px 0px 1px 0px #fff;
+}
+.handleLogo{
+    position:absolute;
+    top: -15px;
+    left:1px;
+    z-index: 3;
 }
 </style>

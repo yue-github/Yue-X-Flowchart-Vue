@@ -5,7 +5,7 @@
 */
 
 <style scoped lang="less" rel="stylesheet/less">
-@import '../assets/icon/iconfont.css';
+@import '../assets/iconfont/iconfont.css';
   .materials-editor {
     display: inline-block;
     width: 100%;
@@ -258,7 +258,7 @@
         _t.editor.$D = {
           fill: 'red',
           fillOpacity: 1,
-          lineColor: 'red',
+          lineColor: '#1d91f9',
           strokeOpacity: 1,
           lineWidth: 5,
           lineType: 'doubleArticle',

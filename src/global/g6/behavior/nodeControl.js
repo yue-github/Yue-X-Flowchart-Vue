@@ -434,7 +434,7 @@ export default {
               lineAppendWidth: 15,
               stroke: '#fff',
               lineWidth: 2,
-              ...config.edge.type[_t.graph.$D.lineDash]
+              lineDash: [ 8, 8 ]
             },
             // FIXME 边的形式需要与工具栏联动
             type: _t.graph.$D.lineType || 'line',
@@ -478,9 +478,23 @@ export default {
       stop (event) {
         const _t = this
         if (_t.drawLine.isMoving) {
-          if (_t.drawLine.currentLine === event.item) {
+          if (_t.drawLine.currentLine === event.item || _t.drawLine.doubleLine === event.item) {
+            console.log(_t.drawLine.currentLine, event)
             // 画线过程中点击则移除当前画线
-            _t.graph.removeItem(event.item)
+            const sameFlag = event.item._cfg.id.split('-|-')[1];
+            _t.graph.paint();
+            _t.graph.setAutoPaint(false);
+            let index = 0, edges = _t.graph.getEdges();
+            while(index < edges.length){
+              if(edges[index]._cfg.id.includes(sameFlag)){
+                _t.graph.remove(edges[index], true);
+                console.log('删除了')
+                console.log(sameFlag)
+              }else{
+                index ++;
+              }
+            }
+            _t.graph.setAutoPaint(true);
           } else {
             const endNode = event.item
             const startModel = _t.info.node.getModel()

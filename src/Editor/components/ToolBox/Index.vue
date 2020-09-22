@@ -8,6 +8,7 @@
     padding: 5px;
     cursor: pointer;
     z-index: 10;
+    color:red;
 
     // 水平
     &.horizontal {
@@ -52,6 +53,7 @@
       .tool-item {
         text-align: left;
         min-width: 100px;
+        color:red;
       }
     }
   }

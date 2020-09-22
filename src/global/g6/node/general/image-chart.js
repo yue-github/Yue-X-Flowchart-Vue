@@ -10,7 +10,7 @@ import base from '../base'
 import utils from '../../utils'
 import config from '../../config'
 import myBus from '@/global/utils/bus'
-import Chart from '@antv/chart-node-g6';// 安装命令：cnpm i @antv/chart-node-g6@0.0.3
+// import Chart from '@antv/chart-node-g6';// 安装命令：cnpm i @antv/chart-node-g6@0.0.3
 
 export default {
   name: 'image-chart',
