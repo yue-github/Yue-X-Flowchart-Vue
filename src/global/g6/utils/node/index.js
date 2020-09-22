@@ -5,7 +5,9 @@
  */
 
 import calculateArrow from './calculateArrow'
+import setState from './setState'
 
 export default {
-  calculateArrow
+  calculateArrow,
+  setState
 }

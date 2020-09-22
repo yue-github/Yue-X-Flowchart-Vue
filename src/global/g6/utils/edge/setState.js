@@ -10,13 +10,15 @@ import config from '../../config'
 // import destroyAnimate from './destroyAnimate'
 
 export default function (name, value, item) {
+  console.log("激活边-------")
   if (name === 'active') {
     let group = item.getContainer()
     let children = group.get('children')
-    let edge = Store.getters.edgeAnimate ? children.find(_ => _._INDEX === 0) : children[0]
+    let edge = children[0]
     // 处理线条状态
     if (edge) {
       if (value) {
+        console.log("激活边")
         edge.attr(config.edge.style.active)
         // 绘制边动画
         // drawAnimate(item.getModel(), item.getContainer())
@@ -25,6 +27,19 @@ export default function (name, value, item) {
         // 销毁边动画
         // destroyAnimate(item.getModel(), item.getContainer())
       }
+    }
+  }
+  if (name === 'edgeActive') {
+    const group = item.getContainer()
+    const children = group.get('children')
+    const edge = children[0]
+    if (!edge) {
+      return
+    }
+    if (value) {
+      edge.attr(config.edge.style.myActive)
+    } else {
+      edge.attr(config.edge.style.myInactive)
     }
   }
 }

@@ -48,7 +48,9 @@ export default {
     // console.log('points', points)
     return points
   },
-  setState (name, value, item) {
+  setState(name, value, item) {
+    // 设置节点状态
+    utils.node.setState(name, value, item)
     // 设置锚点状态
     utils.anchor.setState(name, value, item)
     // 设置shapeControl状态

@@ -798,12 +798,12 @@ export default function (system = {}, disableTools = [], enableTools = [], short
       // 子节点
       children: [// my-line
         {
-          name: 'doubleArticle',
-          label: 'doubleArticle',
+          name: 'pipe',
+          label: 'pipe',
           lang: '',
           type: 'normal',
           icon: 'solid',
-          data: 'doubleArticle',
+          data: 'pipe',
           enable: true,
           disabled: false,
           divider: false

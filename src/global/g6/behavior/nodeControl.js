@@ -10,6 +10,7 @@ import config from '../config'
 import utils from '../utils'
 import { updateBA } from '@/global/utils/bindAttrController'
 import updateWho from '@/global/utils/updateAllTypeNode'
+import clearAllStats from '@/global/utils/clearAllStats'
 
 const TIME_FRAME = 200
 
@@ -57,6 +58,7 @@ export default {
         'node:mousedown': 'onNodeMousedown',
         'node:dragstart': 'onNodeDragStart',
         'node:drag': 'onNodeDrag',
+        'node:click': 'onNodeClick',
         'node:dragend': 'onNodeDragEnd',
         'node:mouseup': 'onNodeMouseup',
         'node:dblclick': 'onNodeDblclick',
@@ -66,6 +68,7 @@ export default {
         'edge:dblclick': 'onEdgeDblclick',
         'edge:contextmenu': 'onEdgeContextmenu',
         'canvas:mousedown': 'onCanvasMousedown',
+        'edge:click': 'onEdgeclick',
         // 'canvas:mousemove': 'onCanvasMousemove',
         'canvas:mouseup': 'onCanvasMouseup',
         'canvas:mouseenter': 'onCanvasMouseenter',
@@ -75,6 +78,58 @@ export default {
         'mouseup': 'onMouseup'
       }
     },
+       // 边点击
+       onEdgeclick(_e) {
+        const _t = this;
+        clearAllStats(_t.graph)
+        const e = _e.item;
+        // 获取线来源
+        const source = e.getSource();
+        // 获取线目标
+        const target = e.getTarget();
+        _t.graph.setItemState(source, 'nodeActiveRed', true);
+        _t.graph.setItemState(target, 'nodeActiveRed', true);
+        const sameFlag = e._cfg.id.split('-|-')[1];
+        const doubleArticles = _e.currentTarget.cfg.edges.filter(_ => _._cfg.id.includes(sameFlag))
+        doubleArticles.forEach(edge => {
+          _t.graph.setItemState(edge, 'active', true)
+          console.log("激活啦")
+        })
+        // _t.graph.setItemState(e, 'active', true)
+        // 刷新操作
+        _t.graph.refreshItem(source);
+        _t.graph.refreshItem(target);
+        console.log('------------边点击-------------', source, target)
+      },
+      // 节点点击
+      onNodeClick(e) {
+        const _t = this;
+        let graph = _t.graph;
+        const item = e.item;
+        clearAllStats(graph)
+        graph.setItemState(item, 'nodeActive', true);
+        // 刷新节点
+        graph.refreshItem(item)
+        console.log(graph.getEdges())
+        graph.getEdges().forEach(function (edge) {
+          if (edge.getSource() === item) {
+            // 设置线来源相关节点状态
+            graph.setItemState(edge.getTarget(), 'nodeActive', true);
+            graph.setItemState(edge, 'edgeActive', true);
+            graph.refreshItem(edge.getTarget())
+            edge.toFront();
+            // 设置线目标相关节点状态
+          } else if (edge.getTarget() === item) {
+            graph.setItemState(edge.getSource(), 'nodeActive', true);
+            graph.setItemState(edge, 'edgeActive', true);
+            edge.toFront();
+            graph.refreshItem(edge.getSource())
+          } else {
+            graph.setItemState(edge, 'edgeActive', false);
+          }
+          graph.refreshItem(edge)
+        });
+      },
     onEditorAddNode (node) {
       const _t = this
       console.log('onEditorAddNode')
@@ -288,6 +343,7 @@ export default {
         return
       }
       const _t = this
+      clearAllStats(_t.graph)
       // 初始化数据
       _t.info = {
         type: 'drawGroup',
@@ -425,7 +481,7 @@ export default {
               }
             },
             // 韬光养晦
-            visible: _t.graph.$D.lineDash == 'doubleArticle',
+            visible: _t.graph.$D.lineDash == 'pipe',
             attrs: {
               flag: 'doubleLine',
             },

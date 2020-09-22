@@ -12,11 +12,20 @@ export default {
     },
     active: {
       shadowColor: 'red',
-      shadowBlur: 4,
+      shadowBlur: 5,
       shadowOffsetX: 0,
       shadowOffsetY: 0
     },
     inactive: {
+      shadowColor: ''
+    },
+    myActive: {
+      shadowColor: '#28FF28',
+      shadowBlur: 10,
+      shadowOffsetX: 0,
+      shadowOffsetY: 0
+    },
+    myInactive: {
       shadowColor: ''
     }
   },
@@ -32,6 +41,9 @@ export default {
     },
     dot: {
       lineDash: [ 2, 2 ]
+    },
+    pipe: {
+      lineDash: []
     }
   }
 }

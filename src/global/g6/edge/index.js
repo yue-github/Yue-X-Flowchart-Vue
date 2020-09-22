@@ -8,12 +8,14 @@ import line from './line'
 import cubic from './cubic'
 import broken from './broken'
 import doubleArticle from './doubleArticle'
+import pipe from './pipe'
 
 const obj = {
   line,
   cubic,
   broken,
-  doubleArticle
+  doubleArticle,
+  pipe
 }
 
 export default function (G6) {
