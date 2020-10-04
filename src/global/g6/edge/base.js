@@ -29,81 +29,81 @@ export default {
       let shape = group.get('children')[0];
       // 边 path 的起点位置
       const startPoint = shape.getPoint(0) || cfg.startPoint;
-      // let sinStart1 = startPoint.y / Math.sqrt(Math.pow(startPoint.x, 2) + Math.pow(startPoint.y, 2));
-      // let cosStart1 = startPoint.x / Math.sqrt(Math.pow(startPoint.x, 2) + Math.pow(startPoint.y, 2))
-      // let topX1 = startPoint.x - sinStart1 * 10;
-      // let topY1 = startPoint.y - cosStart1 * 10
-      // let bottomX1 = startPoint.x + sinStart1 * 10
-      // let bottomY1 = startPoint.y + cosStart1 * 10
-      // // 添加红色 circle 图形
-      // let myPath = group.addShape('path', {
-      //   attrs: {
-      //     x: startPoint.x,
-      //     y: startPoint.y,
-      //     path: [
-      //       [
-      //         'M',
-      //         topX1,
-      //         topY1
-      //       ],
-      //       [
-      //         'L',
-      //         startPoint.x + cosStart1 * 10,
-      //         startPoint.y - sinStart1 * 10
-      //       ],
-      //       [
-      //         'L',
-      //         bottomX1,
-      //         bottomY1
-      //       ],
-      //       ['Z']
-      //     ],
-      //     fill: '#59abfe',
-      //     stroke: 'pink'
-      //   }
-      // });
-      // // 对红色圆点添加动画
-      // myPath.animate({
-      //   // 动画重复
-      //   repeat: true,
-      //   // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
-      //   onFrame(ratio) {
-      //     // 根据比例值，获得在边 path 上对应比例的位置。
-      //     let tmpPoint = shape.getPoint(ratio) || cfg.startPoint;
-      //     // 返回需要变化的参数集，这里返回了位置 x 和 y
-      //     let sinStart = tmpPoint.y / Math.sqrt(Math.pow(tmpPoint.x, 2) + Math.pow(tmpPoint.y, 2));
-      //     let cosStart = tmpPoint.x / Math.sqrt(Math.pow(tmpPoint.x, 2) + Math.pow(tmpPoint.y, 2))
-      //     let topX = tmpPoint.x - sinStart * 10;
-      //     let topY = tmpPoint.y - cosStart * 10
-      //     let bottomX = tmpPoint.x + sinStart * 10
-      //     let bottomY = tmpPoint.y + cosStart * 10
+      let sinStart1 = startPoint.y / Math.sqrt(Math.pow(startPoint.x, 2) + Math.pow(startPoint.y, 2));
+      let cosStart1 = startPoint.x / Math.sqrt(Math.pow(startPoint.x, 2) + Math.pow(startPoint.y, 2))
+      let topX1 = startPoint.x - sinStart1 * 10;
+      let topY1 = startPoint.y - cosStart1 * 10
+      let bottomX1 = startPoint.x + sinStart1 * 10
+      let bottomY1 = startPoint.y + cosStart1 * 10
+      // 添加红色 circle 图形
+      let myPath = group.addShape('path', {
+        attrs: {
+          x: startPoint.x,
+          y: startPoint.y,
+          path: [
+            [
+              'M',
+              topX1,
+              topY1
+            ],
+            [
+              'L',
+              startPoint.x + cosStart1 * 10,
+              startPoint.y - sinStart1 * 10
+            ],
+            [
+              'L',
+              bottomX1,
+              bottomY1
+            ],
+            ['Z']
+          ],
+          fill: '#59abfe',
+          stroke: 'pink'
+        }
+      });
+      // 对红色圆点添加动画
+      myPath.animate({
+        // 动画重复
+        repeat: true,
+        // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
+        onFrame(ratio) {
+          // 根据比例值，获得在边 path 上对应比例的位置。
+          let tmpPoint = shape.getPoint(ratio) || cfg.startPoint;
+          // 返回需要变化的参数集，这里返回了位置 x 和 y
+          let sinStart = tmpPoint.y / Math.sqrt(Math.pow(tmpPoint.x, 2) + Math.pow(tmpPoint.y, 2));
+          let cosStart = tmpPoint.x / Math.sqrt(Math.pow(tmpPoint.x, 2) + Math.pow(tmpPoint.y, 2))
+          let topX = tmpPoint.x - sinStart * 10;
+          let topY = tmpPoint.y - cosStart * 10
+          let bottomX = tmpPoint.x + sinStart * 10
+          let bottomY = tmpPoint.y + cosStart * 10
 
-      //     return {
-      //       x: tmpPoint.x,
-      //       y: tmpPoint.y,
+          return {
+            x: tmpPoint.x,
+            y: tmpPoint.y,
 
-      //       path: [
-      //         [
-      //           'M',
-      //           bottomX,
-      //           bottomY
+            path: [
+              [
+                'M',
+                bottomX,
+                bottomY
 
-      //         ],
-      //         [
-      //           'L',
-      //           tmpPoint.x + sinStart * 10,
-      //           tmpPoint.y - cosStart * 10
-      //         ],
-      //         [
-      //           'L',
-      //           topX,
-      //           topY
-      //         ],
-      //         ['Z']
-      //       ],
-      //     };
-      //   }
-      // }, 3000); // 一次动画的时间长度
+              ],
+              [
+                'L',
+                tmpPoint.x + sinStart * 10,
+                tmpPoint.y - cosStart * 10
+              ],
+              [
+                'L',
+                topX,
+                topY
+              ],
+              ['Z']
+            ],
+          };
+        }
+      }, 3000); // 一次动画的时间长度
       let myCircle = group.addShape('circle', {
         zIndex: 1000,
         attrs: {

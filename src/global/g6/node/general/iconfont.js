@@ -260,7 +260,7 @@ export default {
       bindAttr.bindAttrImages.forEach(attrs => {
         attrs.flag = 'bindAttr' //标识是绑定属性
         const imgShape = group.addShape('image', {
-          visible: true,// 默认不展示
+          visible: false,// 默认不展示
           attrs: attrs
         })
         if (imgShape) {

@@ -54,12 +54,12 @@ export default {
       }
       // 边 path 的起点位置
       const startPoint = shape.getPoint(0) || cfg.startPoint;
-      // let sinStart1 = startPoint.y / Math.sqrt(Math.pow(startPoint.x, 2) + Math.pow(startPoint.y, 2));
-      // let cosStart1 = startPoint.x / Math.sqrt(Math.pow(startPoint.x, 2) + Math.pow(startPoint.y, 2))
-      // let topX1 = startPoint.x - sinStart1 * 10;
-      // let topY1 = startPoint.y - cosStart1 * 10
-      // let bottomX1 = startPoint.x + sinStart1 * 10
-      // let bottomY1 = startPoint.y + cosStart1 * 10
+      let sinStart1 = startPoint.y / Math.sqrt(Math.pow(startPoint.x, 2) + Math.pow(startPoint.y, 2));
+      let cosStart1 = startPoint.x / Math.sqrt(Math.pow(startPoint.x, 2) + Math.pow(startPoint.y, 2))
+      let topX1 = startPoint.x - sinStart1 * 10;
+      let topY1 = startPoint.y - cosStart1 * 10
+      let bottomX1 = startPoint.x + sinStart1 * 10
+      let bottomY1 = startPoint.y + cosStart1 * 10
       // // 添加红色 circle 图形
       // let myPath = group.addShape('path', {
       //   attrs: {
@@ -129,212 +129,212 @@ export default {
       //     };
       //   }
       // }, 3000); // 一次动画的时间长度
-      // let myCircle = group.addShape('circle', {
-      //   zIndex: 1000,
-      //   attrs: {
-      //     x: startPoint.x,
-      //     y: startPoint.y,
-      //     fillOpacity: 0.8,
-      //     lineWidth: 1,
-      //     stroke: 'red',
-      //     fill: cfg.style.stroke,
-      //     r: 3
-      //   }
-      // })
-      // myCircle.animate(ratio => {
-      //   const tmpPoint = shape.getPoint(ratio) || {};
-      //   // 返回需要变化的参数集，这里返回了位置 x 和 y
-      //   return {
-      //     x: tmpPoint.x,
-      //     y: tmpPoint.y,
-      //   }
-      // }, {
-      //   duration: 4000,
-      //   repeat: true,
-      //   delay: 0
-      // })
-      // // 画圆
-      // let r = 3
-      // if (!backA || !backB || !backC || !backD || !backE) {
-      //   // 第一个背景圆
-      //   console.log(cfg)
-      //   backA = group.addShape('circle', {
-      //     zIndex: -3,
-      //     attrs: {
-      //       x: startPoint.x,
-      //       y: startPoint.y,
-      //       r: r,
-      //       fill: cfg.style.stroke,
-      //       opacity: 1,
-      //     }
-      //   });
-      //   backA.animate({
-      //     r: r + 10,
-      //     opacity: 0
-      //   },
-      //     {
-      //       repeat: true,
-      //       duration: 3000,
-      //       delay: 200,
-      //       easing: 'easeCubic',
-      //     });
-      //   // 第二个背景圆
-      //   backB = group.addShape('circle', {
-      //     zIndex: -2,
-      //     attrs: {
-      //       x: startPoint.x,
-      //       y: startPoint.y,
-      //       r: r,
-      //       fill: 'green',
-      //       opacity: 1
-      //     }
-      //   });
-      //   backB.animate({
-      //     r: r + 10,
-      //     opacity: 0
-      //   },
-      //     {
-      //       repeat: true,
-      //       duration: 3000,
-      //       delay: 600,
-      //       easing: 'easeCubic',
-      //     });
-      //   // 第三个背景圆
-      //   backC = group.addShape('circle', {
-      //     zIndex: -1,
-      //     attrs: {
-      //       x: startPoint.x,
-      //       y: startPoint.y,
-      //       r: r,
-      //       fill: '#f40',
-      //       opacity: 1
-      //     }
-      //   })
-      //   backC.animate({
-      //     r: r + 10,
-      //     opacity: 0
-      //   },
-      //     {
-      //       repeat: true,
-      //       duration: 3000,
-      //       delay: 1200,
-      //       easing: 'easeCubic'
-      //     });
-      //          // 第二个背景圆
-      //   backD = group.addShape('circle', {
-      //     zIndex: -2,
-      //     attrs: {
-      //       x: startPoint.x,
-      //       y: startPoint.y,
-      //       r: r,
-      //       fill: 'blue',
-      //       opacity: 1
-      //     }
-      //   });
-      //   backD.animate({
-      //     r: r + 10,
-      //     opacity: 0
-      //   },
-      //     {
-      //       repeat: true,
-      //       duration: 3000,
-      //       delay: 1800,
-      //       easing: 'easeCubic',
-      //     });
-      //   // 第三个背景圆
-      //   backE = group.addShape('circle', {
-      //     zIndex: -1,
-      //     attrs: {
-      //       x: startPoint.x,
-      //       y: startPoint.y,
-      //       r: r,
-      //       fill: 'purple',
-      //       opacity: 1
-      //     }
-      //   })
-      //   backE.animate({
-      //     r: r + 10,
-      //     opacity: 0
-      //   },
-      //     {
-      //       repeat: true,
-      //       duration: 3000,
-      //       delay: 2400,
-      //       easing: 'easeCubic'
-      //     });
-      // }
+      let myCircle = group.addShape('circle', {
+        zIndex: 1000,
+        attrs: {
+          x: startPoint.x,
+          y: startPoint.y,
+          fillOpacity: 0.8,
+          lineWidth: 1,
+          stroke: 'red',
+          fill: cfg.style.stroke,
+          r: 3
+        }
+      })
+      myCircle.animate(ratio => {
+        const tmpPoint = shape.getPoint(ratio) || {};
+        // 返回需要变化的参数集，这里返回了位置 x 和 y
+        return {
+          x: tmpPoint.x,
+          y: tmpPoint.y,
+        }
+      }, {
+        duration: 4000,
+        repeat: true,
+        delay: 0
+      })
+      // 画圆
+      let r = 3
+      if (!backA || !backB || !backC || !backD || !backE) {
+        // 第一个背景圆
+        console.log(cfg)
+        backA = group.addShape('circle', {
+          zIndex: -3,
+          attrs: {
+            x: startPoint.x,
+            y: startPoint.y,
+            r: r,
+            fill: cfg.style.stroke,
+            opacity: 1,
+          }
+        });
+        backA.animate({
+          r: r + 10,
+          opacity: 0
+        },
+          {
+            repeat: true,
+            duration: 3000,
+            delay: 200,
+            easing: 'easeCubic',
+          });
+        // 第二个背景圆
+        backB = group.addShape('circle', {
+          zIndex: -2,
+          attrs: {
+            x: startPoint.x,
+            y: startPoint.y,
+            r: r,
+            fill: 'green',
+            opacity: 1
+          }
+        });
+        backB.animate({
+          r: r + 10,
+          opacity: 0
+        },
+          {
+            repeat: true,
+            duration: 3000,
+            delay: 600,
+            easing: 'easeCubic',
+          });
+        // 第三个背景圆
+        backC = group.addShape('circle', {
+          zIndex: -1,
+          attrs: {
+            x: startPoint.x,
+            y: startPoint.y,
+            r: r,
+            fill: '#f40',
+            opacity: 1
+          }
+        })
+        backC.animate({
+          r: r + 10,
+          opacity: 0
+        },
+          {
+            repeat: true,
+            duration: 3000,
+            delay: 1200,
+            easing: 'easeCubic'
+          });
+               // 第二个背景圆
+        backD = group.addShape('circle', {
+          zIndex: -2,
+          attrs: {
+            x: startPoint.x,
+            y: startPoint.y,
+            r: r,
+            fill: 'blue',
+            opacity: 1
+          }
+        });
+        backD.animate({
+          r: r + 10,
+          opacity: 0
+        },
+          {
+            repeat: true,
+            duration: 3000,
+            delay: 1800,
+            easing: 'easeCubic',
+          });
+        // 第三个背景圆
+        backE = group.addShape('circle', {
+          zIndex: -1,
+          attrs: {
+            x: startPoint.x,
+            y: startPoint.y,
+            r: r,
+            fill: 'purple',
+            opacity: 1
+          }
+        })
+        backE.animate({
+          r: r + 10,
+          opacity: 0
+        },
+          {
+            repeat: true,
+            duration: 3000,
+            delay: 2400,
+            easing: 'easeCubic'
+          });
+      }
       
-      // backA.animate({
-      //   // 动画重复
-      //   repeat: true,
-      //   // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
-      //   onFrame(ratio) {
-      //     // 根据比例值，获得在边 path 上对应比例的位置。
-      //     const tmpPoint = shape.getPoint(ratio) || {};
-      //     // 返回需要变化的参数集，这里返回了位置 x 和 y
-      //     return {
-      //       x: tmpPoint.x,
-      //       y: tmpPoint.y,
-      //     };
-      //   }
-      // }, 4000)
-      // backB.animate({
-      //   // 动画重复
-      //   repeat: true,
-      //   // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
-      //   onFrame(ratio) {
-      //     // 根据比例值，获得在边 path 上对应比例的位置。
-      //     const tmpPoint = shape.getPoint(ratio) || {};
-      //     // 返回需要变化的参数集，这里返回了位置 x 和 y
-      //     return {
-      //       x: tmpPoint.x,
-      //       y: tmpPoint.y,
-      //     };
-      //   }
-      // }, 4000)
-      // backC.animate({
-      //   // 动画重复
-      //   repeat: true,
-      //   // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
-      //   onFrame(ratio) {
-      //     // 根据比例值，获得在边 path 上对应比例的位置。
-      //     const tmpPoint = shape.getPoint(ratio) || {};
-      //     // 返回需要变化的参数集，这里返回了位置 x 和 y
-      //     return {
-      //       x: tmpPoint.x,
-      //       y: tmpPoint.y,
-      //     };
-      //   }
-      // }, 4000)
-      // backD.animate({
-      //   // 动画重复
-      //   repeat: true,
-      //   // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
-      //   onFrame(ratio) {
-      //     // 根据比例值，获得在边 path 上对应比例的位置。
-      //     const tmpPoint = shape.getPoint(ratio) || {};
-      //     // 返回需要变化的参数集，这里返回了位置 x 和 y
-      //     return {
-      //       x: tmpPoint.x,
-      //       y: tmpPoint.y,
-      //     };
-      //   }
-      // }, 4000)
-      // backE.animate({
-      //   // 动画重复
-      //   repeat: true,
-      //   // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
-      //   onFrame(ratio) {
-      //     // 根据比例值，获得在边 path 上对应比例的位置。
-      //     const tmpPoint = shape.getPoint(ratio) || {};
-      //     // 返回需要变化的参数集，这里返回了位置 x 和 y
-      //     return {
-      //       x: tmpPoint.x,
-      //       y: tmpPoint.y,
-      //     };
-      //   }
-      // }, 4000)
-      // group.sort(); // 排序，根据 zIndex 排序
+      backA.animate({
+        // 动画重复
+        repeat: true,
+        // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
+        onFrame(ratio) {
+          // 根据比例值，获得在边 path 上对应比例的位置。
+          const tmpPoint = shape.getPoint(ratio) || {};
+          // 返回需要变化的参数集，这里返回了位置 x 和 y
+          return {
+            x: tmpPoint.x,
+            y: tmpPoint.y,
+          };
+        }
+      }, 4000)
+      backB.animate({
+        // 动画重复
+        repeat: true,
+        // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
+        onFrame(ratio) {
+          // 根据比例值，获得在边 path 上对应比例的位置。
+          const tmpPoint = shape.getPoint(ratio) || {};
+          // 返回需要变化的参数集，这里返回了位置 x 和 y
+          return {
+            x: tmpPoint.x,
+            y: tmpPoint.y,
+          };
+        }
+      }, 4000)
+      backC.animate({
+        // 动画重复
+        repeat: true,
+        // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
+        onFrame(ratio) {
+          // 根据比例值，获得在边 path 上对应比例的位置。
+          const tmpPoint = shape.getPoint(ratio) || {};
+          // 返回需要变化的参数集，这里返回了位置 x 和 y
+          return {
+            x: tmpPoint.x,
+            y: tmpPoint.y,
+          };
+        }
+      }, 4000)
+      backD.animate({
+        // 动画重复
+        repeat: true,
+        // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
+        onFrame(ratio) {
+          // 根据比例值，获得在边 path 上对应比例的位置。
+          const tmpPoint = shape.getPoint(ratio) || {};
+          // 返回需要变化的参数集，这里返回了位置 x 和 y
+          return {
+            x: tmpPoint.x,
+            y: tmpPoint.y,
+          };
+        }
+      }, 4000)
+      backE.animate({
+        // 动画重复
+        repeat: true,
+        // 每一帧的操作，入参 ratio：这一帧的比例值（Number）。返回值：这一帧需要变化的参数集（Object）。
+        onFrame(ratio) {
+          // 根据比例值，获得在边 path 上对应比例的位置。
+          const tmpPoint = shape.getPoint(ratio) || {};
+          // 返回需要变化的参数集，这里返回了位置 x 和 y
+          return {
+            x: tmpPoint.x,
+            y: tmpPoint.y,
+          };
+        }
+      }, 4000)
+      group.sort(); // 排序，根据 zIndex 排序
     },
   }
 }

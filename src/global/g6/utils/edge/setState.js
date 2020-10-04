@@ -14,7 +14,7 @@ export default function (name, value, item) {
   if (name === 'active') {
     let group = item.getContainer()
     let children = group.get('children')
-    let edge = children[0]
+    let edge = children.find(_ => _._INDEX === 0)
     // 处理线条状态
     if (edge) {
       if (value) {
@@ -32,7 +32,7 @@ export default function (name, value, item) {
   if (name === 'edgeActive') {
     const group = item.getContainer()
     const children = group.get('children')
-    const edge = children[0]
+    const edge = children.find(_ => _._INDEX === 0)
     if (!edge) {
       return
     }

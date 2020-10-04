@@ -22,16 +22,17 @@ export default function (node, graph) {
       anchorIndex = edgeModel.sourceAnchor
       anchorPoint = anchorPoints[anchorIndex]
       model = {
-        source: anchorPoint
+        startPoint: anchorPoint
       }
     } else if (id === edgeModel.attrs.end) {
       anchorIndex = edgeModel.targetAnchor
       anchorPoint = anchorPoints[anchorIndex]
       model = {
-        target: anchorPoint
+        endPoint: anchorPoint
       }
     }
     if (anchorPoint && model) {
+      
       graph.updateItem(edge, model)
     }
   })

@@ -25,11 +25,11 @@ export default {
         config: {
           shapeControlPoint: {
             // 是否在缩放、旋转节点时更新所有与之相连的边
-            updateEdge: false
+            updateEdge: true
           },
           dragNode: {
             // 是否在拖拽节点时更新所有与之相连的边
-            updateEdge: false
+            updateEdge: true
           },
           // 是否支持在节点上添加文本
           nodeLabel: true,
@@ -39,7 +39,7 @@ export default {
           tooltip: {
             shapeControl: true,
             dragNode: true,
-            dragEdge: false
+            dragEdge: true
           },
           // 是否启用对齐线
           alignLine: {
